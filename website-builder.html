@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Get Your Free Website Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0A;--panel:#111;--card:#181818;--border:rgba(255,255,255,0.06);
+  --white:#F5F4F0;--muted:#555;--muted2:#888;
+  --accent:#00C896;--accent2:#00A37A;
+  --fd:'Syne',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--fb);-webkit-font-smoothing:antialiased;font-size:15px}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,200,150,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.25);color:var(--accent);font-family:var(--fm);font-size:11px;padding:6px 14px;border-radius:20px;letter-spacing:0.08em;margin-bottom:28px}
+.pulse{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero h1{font-family:var(--fd);font-size:clamp(38px,8vw,72px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:20px;max-width:800px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:clamp(15px,2vw,18px);color:var(--muted2);max-width:480px;line-height:1.7;margin-bottom:40px}
+.hero-proof{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:48px}
+.proof-item{font-family:var(--fm);font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.proof-item::before{content:'✓';color:var(--accent)}
+.btn-hero{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#000;font-family:var(--fd);font-weight:800;font-size:16px;padding:16px 36px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn-hero:hover{background:var(--accent2);transform:translateY(-2px)}
+.btn-hero-ghost{display:inline-flex;align-items:center;gap:8px;color:var(--muted2);font-family:var(--fm);font-size:13px;text-decoration:none;margin-top:16px;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .2s,border-color .2s}
+.btn-hero-ghost:hover{color:var(--accent);border-color:var(--accent)}
+.section{padding:80px 20px;max-width:900px;margin:0 auto}
+.sec-eyebrow{font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;text-align:center}
+.sec-title{font-family:var(--fd);font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:48px;text-align:center}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 20px}
+.step-num{font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.1em;margin-bottom:12px}
+.step-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:8px}
+.step-desc{font-size:13px;color:var(--muted2);line-height:1.6}
+.builder-wrap{background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.builder-inner{max-width:680px;margin:0 auto;padding:64px 20px}
+.builder-title{font-family:var(--fd);font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-0.02em;margin-bottom:8px;text-align:center}
+.builder-sub{font-size:14px;color:var(--muted2);text-align:center;margin-bottom:40px}
+.progress-bar{display:flex;gap:8px;margin-bottom:40px;justify-content:center}
+.prog-step{flex:1;max-width:80px;height:4px;background:var(--border);border-radius:2px;transition:background .3s}
+.prog-step.done{background:var(--accent)}
+.prog-step.active{background:rgba(0,200,150,.4)}
+.form-step{display:none}
+.form-step.active{display:block}
+.step-heading{font-family:var(--fd);font-size:20px;font-weight:800;margin-bottom:6px}
+.step-hint{font-size:13px;color:var(--muted2);margin-bottom:24px;line-height:1.5}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-family:var(--fm);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--card);border:1px solid var(--border);color:var(--white);font-family:var(--fb);font-size:14px;padding:12px 14px;border-radius:8px;outline:none;-webkit-appearance:none;transition:border-color .2s}
+.fg textarea{resize:vertical;min-height:90px}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent)}
+.fg select option{background:#181818}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-next{width:100%;padding:14px;border-radius:8px;background:var(--accent);color:#000;font-family:var(--fd);font-weight:800;font-size:15px;border:none;cursor:pointer;transition:background .2s;margin-top:8px}
+.btn-next:hover{background:var(--accent2)}
+.btn-next:disabled{background:#222;color:#444;cursor:not-allowed}
+.btn-back{background:none;border:none;color:var(--muted);font-family:var(--fm);font-size:12px;cursor:pointer;margin-top:12px;display:block;text-align:center;width:100%;padding:8px}
+.btn-back:hover{color:var(--white)}
+.color-options{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.color-opt{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .15s,border-color .15s;flex-shrink:0}
+.color-opt.selected{border-color:var(--white);transform:scale(1.1)}
+.style-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.style-opt{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 12px;cursor:pointer;transition:all .15s;text-align:left}
+.style-opt.selected,.style-opt:hover{border-color:var(--accent);background:rgba(0,200,150,.06)}
+.style-opt-title{font-family:var(--fd);font-size:13px;font-weight:700;margin-bottom:3px}
+.style-opt-desc{font-size:11px;color:var(--muted2)}
+.generating{text-align:center;padding:40px 0}
+.gen-spinner{width:48px;height:48px;border:3px solid rgba(0,200,150,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 24px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gen-title{font-family:var(--fd);font-size:20px;font-weight:800;margin-bottom:8px}
+.gen-steps{font-size:13px;color:var(--muted2);line-height:2}
+.gen-step-item{transition:color .3s}
+.gen-step-item.done{color:var(--accent)}
+.gen-step-item.active{color:var(--white)}
+.preview-wrap{display:none}
+.preview-header{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--border);border-bottom:none;border-radius:10px 10px 0 0;padding:10px 14px}
+.preview-dots{display:flex;gap:5px}
+.preview-dot{width:10px;height:10px;border-radius:50%;background:#333}
+.preview-dot:first-child{background:#FF5F57}
+.preview-dot:nth-child(2){background:#FFBD2E}
+.preview-dot:last-child{background:#28C840}
+.preview-label{font-family:var(--fm);font-size:11px;color:var(--muted)}
+.preview-frame-wrap{border:1px solid var(--border);border-radius:0 0 10px 10px;overflow:hidden;background:#fff}
+.preview-frame{width:100%;border:none;height:520px;display:block}
+.cta-box{background:rgba(0,200,150,.07);border:1px solid rgba(0,200,150,.2);border-radius:12px;padding:28px 20px;text-align:center;margin-top:20px}
+.cta-box h3{font-family:var(--fd);font-size:20px;font-weight:800;margin-bottom:8px}
+.cta-box p{font-size:13px;color:var(--muted2);margin-bottom:20px;line-height:1.6}
+.cta-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-whatsapp{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#000;font-family:var(--fd);font-weight:800;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:opacity .2s}
+.btn-whatsapp:hover{opacity:.85}
+.btn-email-cta{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);color:var(--white);font-family:var(--fd);font-weight:700;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;transition:border-color .2s}
+.btn-email-cta:hover{border-color:var(--accent);color:var(--accent)}
+.price-badge{display:inline-block;background:var(--accent);color:#000;font-family:var(--fm);font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;margin-left:8px}
+footer{padding:40px 20px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8}
+.api-banner{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.2);border-radius:8px;padding:10px 14px;font-size:12px;color:#F5C842;margin-bottom:20px;display:none}
+.api-banner a{color:#F5C842;text-decoration:underline}
+@media(max-width:600px){
+  .fg-row{grid-template-columns:1fr}
+  .cta-buttons{flex-direction:column;align-items:stretch}
+  .btn-whatsapp,.btn-email-cta{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<section class="hero" id="top">
+  <div class="hero-badge"><span class="pulse"></span>AI-Powered · Free Preview · 2 Minutes</div>
+  <h1>See your business<br/>website <em>before</em><br/>you pay a cent.</h1>
+  <p class="hero-sub">Answer 5 quick questions. Our AI builds a real, working website preview for your business — instantly.</p>
+  <div class="hero-proof">
+    <span class="proof-item">No credit card needed</span>
+    <span class="proof-item">Ready in under 2 minutes</span>
+    <span class="proof-item">Mobile-friendly design</span>
+    <span class="proof-item">Yours to keep from $350</span>
+  </div>
+  <button class="btn-hero" onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})">Build My Free Preview →</button>
+  <a class="btn-hero-ghost" href="#how">See how it works ↓</a>
+</section>
+
+<section class="section" id="how">
+  <p class="sec-eyebrow">How It Works</p>
+  <h2 class="sec-title">Your website in 3 simple steps</h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <p class="step-num">— STEP 01</p>
+      <h3 class="step-title">Tell us about your business</h3>
+      <p class="step-desc">Business name, what you do, your city, and a couple of quick details. Takes under 2 minutes.</p>
+    </div>
+    <div class="step-card">
+      <p class="step-num">— STEP 02</p>
+      <h3 class="step-title">AI builds your site</h3>
+      <p class="step-desc">Our AI writes the copy, picks the layout, and generates a complete website specifically for your business.</p>
+    </div>
+    <div class="step-card">
+      <p class="step-num">— STEP 03</p>
+      <h3 class="step-title">Get it live for $350</h3>
+      <p class="step-desc">Love your preview? We deploy it to a real domain, set up your contact form, and hand it over fully working.</p>
+    </div>
+  </div>
+</section>
+
+<div class="builder-wrap" id="builder">
+<div class="builder-inner">
+  <h2 class="builder-title">Build your free preview</h2>
+  <p class="builder-sub">No sign-up. No payment. Just your website.</p>
+  <div class="api-banner" id="apiBanner">⚠️ API key not configured. <a href="#" onclick="promptApiKey()">Click here to add your Anthropic key</a> to enable AI generation.</div>
+  <div class="progress-bar">
+    <div class="prog-step active" id="prog0"></div>
+    <div class="prog-step" id="prog1"></div>
+    <div class="prog-step" id="prog2"></div>
+    <div class="prog-step" id="prog3"></div>
+    <div class="prog-step" id="prog4"></div>
+  </div>
+
+  <div class="form-step active" id="step0">
+    <p class="step-heading">Tell us about your business</p>
+    <p class="step-hint">We'll use this to write real content for your website — not lorem ipsum.</p>
+    <div class="fg"><label>Business Name *</label><input type="text" id="bName" placeholder="e.g. Mike's Auto Repair"/></div>
+    <div class="fg-row">
+      <div class="fg"><label>Business Type *</label>
+        <select id="bType">
+          <option value="">Select…</option>
+          <option>Restaurant / Cafe</option><option>Plumber</option><option>Electrician</option>
+          <option>Hair Salon / Barber</option><option>Auto Repair Shop</option>
+          <option>Dentist / Chiropractor</option><option>Law Firm</option>
+          <option>Cleaning Service</option><option>Landscaping</option>
+          <option>Photography</option><option>Retail Store</option><option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>City, State</label><input type="text" id="bCity" placeholder="e.g. Austin, TX"/></div>
+    </div>
+    <div class="fg"><label>Describe what you do *</label><textarea id="bDesc" placeholder="e.g. We're a family-owned auto repair shop. We handle oil changes, brakes, engine work, and AC repairs. Serving Austin since 2008."></textarea></div>
+    <button class="btn-next" onclick="goStep(1)">Next: Your Services →</button>
+  </div>
+
+  <div class="form-step" id="step1">
+    <p class="step-heading">What do you offer?</p>
+    <p class="step-hint">List your main services and how customers can reach you.</p>
+    <div class="fg"><label>Your Top 3–5 Services (one per line) *</label><textarea id="bServices" placeholder="Oil changes&#10;Brake repair&#10;Engine diagnostics&#10;AC repair&#10;Tire rotation"></textarea></div>
+    <div class="fg-row">
+      <div class="fg"><label>Phone Number</label><input type="tel" id="bPhone" placeholder="(512) 555-0123"/></div>
+      <div class="fg"><label>Email Address</label><input type="email" id="bEmail" placeholder="info@yourbusiness.com"/></div>
+    </div>
+    <div class="fg"><label>Address / Area You Serve</label><input type="text" id="bAddress" placeholder="e.g. 123 Main St, Austin TX"/></div>
+    <button class="btn-next" onclick="goStep(2)">Next: Your Style →</button>
+    <button class="btn-back" onclick="goStep(0)">← Back</button>
+  </div>
+
+  <div class="form-step" id="step2">
+    <p class="step-heading">Pick your style</p>
+    <p class="step-hint">Choose the look and feel that fits your business best.</p>
+    <div class="fg"><label>Website Style *</label>
+      <div class="style-options">
+        <div class="style-opt selected" onclick="pickStyle(this,'professional')"><div class="style-opt-title">Professional</div><div class="style-opt-desc">Clean, trustworthy. Great for law firms, dentists, contractors.</div></div>
+        <div class="style-opt" onclick="pickStyle(this,'bold')"><div class="style-opt-title">Bold & Modern</div><div class="style-opt-desc">Dark, dramatic. Great for auto shops, gyms, barbershops.</div></div>
+        <div class="style-opt" onclick="pickStyle(this,'warm')"><div class="style-opt-title">Warm & Friendly</div><div class="style-opt-desc">Welcoming, bright. Great for restaurants, salons, photographers.</div></div>
+        <div class="style-opt" onclick="pickStyle(this,'minimal')"><div class="style-opt-title">Clean & Minimal</div><div class="style-opt-desc">Simple, elegant. Great for consultants, creatives.</div></div>
+      </div>
+    </div>
+    <div class="fg"><label>Brand Color</label>
+      <div class="color-options" id="colorOptions">
+        <div class="color-opt selected" style="background:#2563EB" onclick="pickColor(this,'#2563EB')"></div>
+        <div class="color-opt" style="background:#16A34A" onclick="pickColor(this,'#16A34A')"></div>
+        <div class="color-opt" style="background:#DC2626" onclick="pickColor(this,'#DC2626')"></div>
+        <div class="color-opt" style="background:#D97706" onclick="pickColor(this,'#D97706')"></div>
+        <div class="color-opt" style="background:#7C3AED" onclick="pickColor(this,'#7C3AED')"></div>
+        <div class="color-opt" style="background:#0F172A" onclick="pickColor(this,'#0F172A')"></div>
+        <div class="color-opt" style="background:#0891B2" onclick="pickColor(this,'#0891B2')"></div>
+        <div class="color-opt" style="background:#BE123C" onclick="pickColor(this,'#BE123C')"></div>
+      </div>
+    </div>
+    <div class="fg"><label>Special offer or tagline (optional)</label><input type="text" id="bTagline" placeholder="e.g. Free estimates · Same-day service · Family-owned since 1998"/></div>
+    <button class="btn-next" onclick="goStep(3)">Next: Review →</button>
+    <button class="btn-back" onclick="goStep(1)">← Back</button>
+  </div>
+
+  <div class="form-step" id="step3">
+    <p class="step-heading">Ready to generate!</p>
+    <p class="step-hint">Here's what we'll build your website from.</p>
+    <div id="reviewCard" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px;font-size:13px;line-height:2;color:var(--muted2)"></div>
+    <button class="btn-next" onclick="generateWebsite()">✨ Generate My Website →</button>
+    <button class="btn-back" onclick="goStep(2)">← Back</button>
+  </div>
+
+  <div class="form-step" id="step4">
+    <div class="generating">
+      <div class="gen-spinner"></div>
+      <p class="gen-title">Building your website…</p>
+      <div class="gen-steps">
+        <div class="gen-step-item active" id="gs0">⟳ Writing your homepage content…</div>
+        <div class="gen-step-item" id="gs1">◻ Designing your layout…</div>
+        <div class="gen-step-item" id="gs2">◻ Adding your services section…</div>
+        <div class="gen-step-item" id="gs3">◻ Setting up contact section…</div>
+        <div class="gen-step-item" id="gs4">◻ Finalizing your website…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-wrap" id="previewWrap">
+    <h3 style="font-family:var(--fd);font-size:18px;font-weight:800;margin-bottom:6px;text-align:center">🎉 Your website is ready!</h3>
+    <p style="font-size:13px;color:var(--muted2);text-align:center;margin-bottom:20px">Here's a live preview. Scroll inside to see the full site.</p>
+    <div class="preview-header">
+      <div class="preview-dots"><div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div></div>
+      <span class="preview-label" id="previewUrl">yoursite.com</span>
+      <span style="font-family:monospace;font-size:10px;color:#00C896">● LIVE PREVIEW</span>
+    </div>
+    <div class="preview-frame-wrap">
+      <iframe id="previewFrame" class="preview-frame" sandbox="allow-same-origin allow-scripts"></iframe>
+    </div>
+    <div class="cta-box">
+      <h3>Love your website? Get it live today.</h3>
+      <p>We'll deploy this to a real domain, add your contact form, make it show up on Google, and hand it over fully working — in under 10 days.<span class="price-badge">From $350</span></p>
+      <div class="cta-buttons">
+        <a class="btn-whatsapp" href="#" target="_blank" id="waBtn">💬 Message on WhatsApp</a>
+        <a class="btn-email-cta" href="#" id="emailBtn">✉️ Send an Email</a>
+      </div>
+    </div>
+    <button class="btn-next" style="margin-top:16px;background:var(--card);border:1px solid var(--border);color:var(--white)" onclick="resetBuilder()">← Build a different preview</button>
+  </div>
+</div>
+</div>
+
+<footer>
+  <p>Built by <strong style="color:var(--white)">Stephen</strong> · Full-Stack Developer · Nairobi, Kenya<br/>
+  Questions? <a href="#" id="footerEmail" style="color:var(--accent);text-decoration:none">Email us</a> · <a href="#" id="footerWa" style="color:var(--accent);text-decoration:none" target="_blank">WhatsApp</a></p>
+</footer>
+
+<script>
+const CONFIG={
+  apiKey:localStorage.getItem('wb_apikey')||'',
+  whatsapp:localStorage.getItem('wb_wa')||'254719477081',
+  email:localStorage.getItem('wb_email')||'stephenmwagolo@gmail.com',
+  yourName:localStorage.getItem('wb_name')||'Stephen'
+};
+let pickedStyleVal='professional',pickedColorVal='#2563EB';
+
+(function(){
+  if(!CONFIG.apiKey) document.getElementById('apiBanner').style.display='block';
+  updateLinks();
+})();
+
+function updateLinks(){
+  const wa=`https://wa.me/${CONFIG.whatsapp}?text=Hi%20${encodeURIComponent(CONFIG.yourName)}!%20I%20just%20saw%20my%20website%20preview%20and%20I%27d%20love%20to%20get%20it%20live!`;
+  const mail=`mailto:${CONFIG.email}?subject=I%20want%20my%20website%20live!`;
+  document.getElementById('waBtn').href=wa;
+  document.getElementById('emailBtn').href=mail;
+  document.getElementById('footerEmail').href=`mailto:${CONFIG.email}`;
+  document.getElementById('footerEmail').textContent=CONFIG.email;
+  document.getElementById('footerWa').href=wa;
+}
+
+function promptApiKey(){
+  const k=prompt('Paste your Anthropic API key (starts with sk-ant-):');
+  if(k&&k.startsWith('sk-')){
+    localStorage.setItem('wb_apikey',k);
+    CONFIG.apiKey=k;
+    document.getElementById('apiBanner').style.display='none';
+    alert('✅ API key saved!');
+  }
+}
+
+function goStep(n){
+  if(n===1&&!validate0())return;
+  if(n===3)renderReview();
+  document.querySelectorAll('.form-step').forEach((el,i)=>el.classList.toggle('active',i===n));
+  for(let i=0;i<5;i++){
+    const p=document.getElementById('prog'+i);
+    p.className='prog-step'+(i<n?' done':i===n?' active':'');
+  }
+  document.getElementById('builder').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function validate0(){
+  if(!document.getElementById('bName').value.trim()){alert('Enter your business name.');return false;}
+  if(!document.getElementById('bType').value){alert('Select your business type.');return false;}
+  if(document.getElementById('bDesc').value.trim().length<20){alert('Please describe your business in more detail.');return false;}
+  return true;
+}
+
+function pickStyle(el,style){
+  document.querySelectorAll('.style-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');pickedStyleVal=style;
+}
+
+function pickColor(el,color){
+  document.querySelectorAll('.color-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');pickedColorVal=color;
+}
+
+function renderReview(){
+  const d=getData();
+  document.getElementById('reviewCard').innerHTML=`
+    <span style="color:var(--white);font-weight:600">${d.name}</span><br/>
+    ${d.type} · ${d.city||'USA'}<br/>
+    Style: ${pickedStyleVal} · Color: <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${pickedColorVal};vertical-align:middle"></span><br/>
+    Services: ${d.services?d.services.split('\n').filter(Boolean).slice(0,3).join(', ')+'…':'Not specified'}<br/>
+    Contact: ${d.phone||d.email||'Not added'}`;
+}
+
+function getData(){
+  return{
+    name:document.getElementById('bName').value.trim(),
+    type:document.getElementById('bType').value,
+    city:document.getElementById('bCity').value.trim(),
+    desc:document.getElementById('bDesc').value.trim(),
+    services:document.getElementById('bServices').value.trim(),
+    phone:document.getElementById('bPhone').value.trim(),
+    email:document.getElementById('bEmail').value.trim(),
+    address:document.getElementById('bAddress').value.trim(),
+    tagline:document.getElementById('bTagline').value.trim(),
+    style:pickedStyleVal,color:pickedColorVal
+  };
+}
+
+async function generateWebsite(){
+  if(!CONFIG.apiKey){promptApiKey();if(!CONFIG.apiKey)return;}
+  goStep(4);animateGenSteps();
+  const d=getData();
+  const styleGuides={
+    professional:'Clean, professional, trustworthy. White/light background. Conservative layout.',
+    bold:'Dark background near black, high contrast, dramatic. Modern and edgy.',
+    warm:'Warm cream/white background. Friendly, inviting, bright. Rounded corners.',
+    minimal:'Ultra-clean white. Lots of whitespace. Elegant simplicity.'
+  };
+  const prompt=`You are an expert web designer. Create a complete, beautiful single-page business website in pure HTML+CSS (no external dependencies except Google Fonts).
+
+Business Details:
+- Name: ${d.name}
+- Type: ${d.type}
+- City: ${d.city||'USA'}
+- Description: ${d.desc}
+- Services: ${d.services||'Not specified'}
+- Phone: ${d.phone||'Call for info'}
+- Email: ${d.email||'Contact via phone'}
+- Address: ${d.address||d.city||'Local area'}
+${d.tagline?'- Tagline: '+d.tagline:''}
+
+Design: ${styleGuides[d.style]} Primary color: ${d.color}. Must be fully mobile-responsive. Use Google Fonts.
+
+Sections: 1) Nav with business name + CTA button 2) Hero with headline + subheadline + CTA 3) About section 4) Services grid 5) Contact section with phone/email/address + form 6) Footer
+
+Rules: Write ONLY the complete HTML document starting with <!DOCTYPE html>. No explanation. No markdown. No code fences. Use REAL content. All CSS in a style tag.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':CONFIG.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    let html=data.content.map(c=>c.text||'').join('');
+    html=html.replace(/```html|```/g,'').trim();
+    document.querySelectorAll('.form-step').forEach(el=>el.classList.remove('active'));
+    document.getElementById('previewWrap').style.display='block';
+    document.getElementById('previewUrl').textContent=d.name.toLowerCase().replace(/\s+/g,'')+'.com';
+    document.getElementById('previewFrame').srcdoc=html;
+    document.getElementById('builder').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){
+    alert('Error: '+e.message+'\n\nCheck your API key in Settings.');
+    goStep(3);
+  }
+}
+
+function animateGenSteps(){
+  const ids=['gs0','gs1','gs2','gs3','gs4'];
+  const done=['✓ Writing your homepage content…','✓ Designing your layout…','✓ Adding your services section…','✓ Setting up contact section…','✓ Finalizing your website…'];
+  ids.forEach(id=>{document.getElementById(id).className='gen-step-item';});
+  document.getElementById('gs0').className='gen-step-item active';
+  ids.forEach((id,i)=>{
+    setTimeout(()=>{
+      if(i>0){document.getElementById(ids[i-1]).className='gen-step-item done';document.getElementById(ids[i-1]).textContent=done[i-1];}
+      document.getElementById(id).className='gen-step-item active';
+    },i*900);
+  });
+}
+
+function resetBuilder(){
+  document.getElementById('previewWrap').style.display='none';
+  document.querySelectorAll('.form-step').forEach(el=>el.classList.remove('active'));
+  goStep(0);
+}
+</script>
+</body>
+</html>
