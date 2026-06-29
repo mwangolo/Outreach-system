@@ -370,7 +370,7 @@ IMPORTANT: Write ONLY the complete HTML document. Start with <!DOCTYPE html> end
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
       body:JSON.stringify({
-        model:'llama3-70b-8192',
+        model:'llama-3.3-70b-versatile',
         max_tokens:4000,
         messages:[
           {role:'system',content:'You are an expert web designer. Output only valid HTML. Never add explanations, markdown, or code fences.'},
