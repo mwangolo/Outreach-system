@@ -76,6 +76,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 .send-status.failed{background:rgba(255,69,69,.1);color:var(--red);display:block}
 .builder-link-box{background:rgba(0,200,150,.05);border:1px solid rgba(0,200,150,.15);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.6}
 .builder-link-box strong{color:var(--accent)}
+.free-badge{display:inline-block;background:rgba(0,200,150,.15);color:var(--accent);font-family:var(--fm);font-size:9px;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -113,9 +114,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 <!-- OUTREACH -->
 <div class="page" id="page-outreach">
   <p class="page-title">AI Outreach</p>
-  <p class="page-sub">AI WRITES + AUTO-SENDS VIA BREVO</p>
-  <div class="setup-banner" id="setupBanner">⚠️ Setup incomplete. Go to ⚙️ Settings and add your Anthropic + Brevo API keys.</div>
-  <div class="success-banner" id="successBanner">✅ All systems ready. Emails auto-send via Brevo.</div>
+  <p class="page-sub">GROQ AI (FREE) + AUTO-SENDS VIA BREVO</p>
+  <div class="setup-banner" id="setupBanner">⚠️ Setup incomplete. Go to ⚙️ Settings and add your Groq + Brevo API keys.</div>
+  <div class="success-banner" id="successBanner">✅ All systems ready. Emails auto-send via Brevo. <span class="free-badge">GROQ FREE</span></div>
   <div class="builder-link-box">🔗 Every email includes a link to your <strong>Free Website Builder</strong> — clients see their website before paying you.</div>
   <div class="form-row">
     <div class="form-group"><label>Business Name *</label><input type="text" id="oName" placeholder="Mike's BBQ"/></div>
@@ -176,19 +177,19 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
   <p class="page-title">Settings</p>
   <p class="page-sub">ONE-TIME SETUP</p>
   <p class="sec-label">Your Info</p>
-  <div class="form-group"><label>Your Name</label><input type="text" id="sName" placeholder="Stephen" value="Stephen"/></div>
-  <div class="form-group"><label>Your Email (Brevo sender)</label><input type="email" id="sEmail" placeholder="stephenmwangolo@gmail.com" value="stephenmwangolo@gmail.com"/></div>
+  <div class="form-group"><label>Your Name</label><input type="text" id="sName" placeholder="Stephen"/></div>
+  <div class="form-group"><label>Your Email (Brevo sender)</label><input type="email" id="sEmail" placeholder="stephenmwangolo@gmail.com"/></div>
   <div class="form-group"><label>Your WhatsApp Number</label><input type="text" id="sWhatsapp" placeholder="254700000000"/></div>
-  <div class="form-group"><label>Website Builder URL</label><input type="text" id="sBuilderUrl" value="https://outreachsyste.netlify.app/website-builder.html"/></div>
+  <div class="form-group"><label>Website Builder URL</label><input type="text" id="sBuilderUrl" placeholder="https://outreachsyste.netlify.app/website-builder.html"/></div>
   <div class="divider"></div>
   <p class="sec-label">API Keys</p>
   <div class="card" style="font-size:12px;color:#888;line-height:1.8;margin-bottom:14px">
-    🤖 <strong style="color:var(--white)">Anthropic key</strong> — generates personalized emails<br/>
-    Get at <strong style="color:var(--accent)">console.anthropic.com</strong> → API Keys<br/><br/>
+    🤖 <strong style="color:var(--white)">Groq key</strong> <span class="free-badge">FREE</span> — generates emails fast<br/>
+    Get at <strong style="color:var(--accent)">console.groq.com</strong> → API Keys<br/><br/>
     📧 <strong style="color:var(--white)">Brevo key</strong> — sends emails automatically<br/>
     Get at <strong style="color:var(--accent)">app.brevo.com</strong> → Settings → API Keys
   </div>
-  <div class="form-group"><label>Anthropic API Key</label><input type="password" id="sAnthropicKey" placeholder="sk-ant-…"/></div>
+  <div class="form-group"><label>Groq API Key (Free)</label><input type="password" id="sGroqKey" placeholder="gsk_…"/></div>
   <div class="form-group"><label>Brevo API Key</label><input type="password" id="sBrevoKey" placeholder="xkeysib-…"/></div>
   <button class="btn btn-primary" onclick="saveSettings()">Save All Settings</button>
   <div id="settingsStatus" style="font-family:monospace;font-size:11px;color:var(--muted);margin-top:10px;text-align:center"></div>
@@ -259,11 +260,11 @@ let pickedNiche=null,pickedCity='',currentLead=null,editingId=null,pipeFilter='a
 })();
 
 function loadSettings(){
-  [['sName','s_name'],['sEmail','s_email'],['sWhatsapp','s_whatsapp'],['sBuilderUrl','s_builderUrl'],['sAnthropicKey','s_anthropicKey'],['sBrevoKey','s_brevoKey']].forEach(([f,k])=>{const v=localStorage.getItem(k);if(v)document.getElementById(f).value=v;});
+  [['sName','s_name'],['sEmail','s_email'],['sWhatsapp','s_whatsapp'],['sBuilderUrl','s_builderUrl'],['sGroqKey','s_groqKey'],['sBrevoKey','s_brevoKey']].forEach(([f,k])=>{const v=localStorage.getItem(k);if(v)document.getElementById(f).value=v;});
 }
 
 function checkSetup(){
-  const ok=localStorage.getItem('s_anthropicKey')&&localStorage.getItem('s_brevoKey');
+  const ok=localStorage.getItem('s_groqKey')&&localStorage.getItem('s_brevoKey');
   document.getElementById('setupBanner').style.display=ok?'none':'block';
   document.getElementById('successBanner').style.display=ok?'block':'none';
 }
@@ -283,9 +284,9 @@ function checkReady(){document.getElementById('mapsBtn').disabled=!(pickedNiche&
 function openMaps(){window.open('https://www.google.com/maps/search/'+encodeURIComponent(pickedNiche.q+' in '+pickedCity),'_blank');toast('Google Maps opened!');}
 
 async function generateAndSend(){
-  const ak=localStorage.getItem('s_anthropicKey');
+  const gk=localStorage.getItem('s_groqKey');
   const bk=localStorage.getItem('s_brevoKey');
-  if(!ak||!bk){toast('Add API keys in ⚙️ Settings first.');switchTab('settings');return;}
+  if(!gk||!bk){toast('Add API keys in ⚙️ Settings first.');switchTab('settings');return;}
   const name=document.getElementById('oName').value.trim();
   const niche=document.getElementById('oNiche').value;
   const email=document.getElementById('oEmail').value.trim();
@@ -304,31 +305,60 @@ async function generateAndSend(){
   btn.innerHTML='<span class="spinner"></span>Generating…';btn.disabled=true;
   document.getElementById('aiOutput').style.display='none';
   document.getElementById('sendStatus').className='send-status sending';
-  document.getElementById('sendStatus').textContent='⟳ Writing personalized email with AI…';
+  document.getElementById('sendStatus').textContent='⟳ Writing personalized email with Groq AI…';
+
   try{
-    const aiRes=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':ak,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:`You are ${myName}, a freelance full-stack web developer sending a cold email to a US small business owner. Write a short, warm, personalized cold email.
+    // STEP 1: Generate with Groq (free)
+    const groqRes=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+gk},
+      body:JSON.stringify({
+        model:'llama3-8b-8192',
+        max_tokens:600,
+        messages:[
+          {role:'system',content:`You are ${myName}, a freelance full-stack web developer. Write short, warm, human cold emails to US small business owners. Never sound like a template.`},
+          {role:'user',content:`Write a cold email to this business:
+Business: ${name} | Niche: ${niche} | City: ${city||'USA'} | Website situation: ${siteDesc}${note?' | Note: '+note:''}
 
-Business: ${name} | Niche: ${niche} | City: ${city||'USA'} | Website: ${siteDesc}${note?' | Note: '+note:''}
-
-You help small businesses get professional websites live in 10 days from $350. You offer a FREE instant website preview where they see their website before paying.
+You help small businesses get professional websites in 10 days from $350. You offer a FREE instant website preview tool.
 
 Format EXACTLY:
 SUBJECT: [subject line]
 ---
 [email body starting with "${greeting},"]
 
-Rules: Under 150 words. Sound human. Mention their website situation. Mention the free preview tool. Include this exact line: "👉 See a free preview of your website here: ${builderUrl}" End with one soft question. No bullet points. Sign off: ${myName} | Full-Stack Developer | ${myEmail}`}]})});
-    const aiData=await aiRes.json();
-    if(aiData.error)throw new Error(aiData.error.message);
-    const text=aiData.content.map(c=>c.text||'').join('');
+Rules: Under 150 words. Sound human. Mention their website situation. Include this exact line near end: "👉 See a free preview of your website here: ${builderUrl}" End with one soft question. No bullet points. Sign off: ${myName} | Full-Stack Developer | ${myEmail}`}
+        ]
+      })
+    });
+
+    const groqData=await groqRes.json();
+    if(groqData.error)throw new Error(groqData.error.message);
+    const text=groqData.choices[0].message.content;
     const parts=text.split('---');
     const subject=(parts[0]||'').replace('SUBJECT:','').trim();
     const body=(parts[1]||text).trim();
+
+    // STEP 2: Send via Brevo
     document.getElementById('sendStatus').textContent='⟳ Sending via Brevo…';
     const htmlBody=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#333;line-height:1.7">${body.replace(/\n/g,'<br/>').replace(builderUrl,`<a href="${builderUrl}" style="color:#00C896;font-weight:bold">${builderUrl}</a>`)}<hr style="border:none;border-top:1px solid #eee;margin:24px 0"/><p style="font-size:12px;color:#999">Sent by ${myName} · Full-Stack Developer · Reply "unsubscribe" to opt out</p></div>`;
-    const brevoRes=await fetch('https://api.brevo.com/v3/smtp/email',{method:'POST',headers:{'Content-Type':'application/json','api-key':bk},body:JSON.stringify({sender:{name:myName,email:myEmail},to:[{email,name:owner||name}],subject,htmlContent:htmlBody,textContent:body})});
+
+    const brevoRes=await fetch('https://api.brevo.com/v3/smtp/email',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','api-key':bk},
+      body:JSON.stringify({
+        sender:{name:myName,email:myEmail},
+        to:[{email,name:owner||name}],
+        subject,
+        htmlContent:htmlBody,
+        textContent:body
+      })
+    });
+
     const brevoData=await brevoRes.json();
     if(!brevoRes.ok)throw new Error(brevoData.message||'Brevo send failed');
+
+    // SUCCESS
     document.getElementById('aiSubject').textContent='📧 '+subject;
     document.getElementById('aiBody').textContent=body;
     document.getElementById('aiOutput').style.display='block';
@@ -337,6 +367,7 @@ Rules: Under 150 words. Sound human. Mention their website situation. Mention th
     currentLead={id:uid(),name,niche,city,site,email,owner,note,status:'contacted',subject,body,date:today()};
     if(!leads.find(l=>l.email===email)){leads.unshift(currentLead);saveLeads();updateDailyGoal();}
     toast('✅ Email sent & saved to pipeline!');
+
   }catch(e){
     document.getElementById('sendStatus').className='send-status failed';
     document.getElementById('sendStatus').textContent='❌ '+e.message;
@@ -386,7 +417,7 @@ function saveEdit(){leads=leads.map(l=>l.id===editingId?{...l,status:document.ge
 function deleteLead(){if(!confirm('Remove?'))return;leads=leads.filter(l=>l.id!==editingId);saveLeads();closeEdit();renderPipeline();toast('Removed.');}
 
 function saveSettings(){
-  [['sName','s_name'],['sEmail','s_email'],['sWhatsapp','s_whatsapp'],['sBuilderUrl','s_builderUrl'],['sAnthropicKey','s_anthropicKey'],['sBrevoKey','s_brevoKey']].forEach(([f,k])=>{const v=document.getElementById(f).value.trim();if(v)localStorage.setItem(k,v);});
+  [['sName','s_name'],['sEmail','s_email'],['sWhatsapp','s_whatsapp'],['sBuilderUrl','s_builderUrl'],['sGroqKey','s_groqKey'],['sBrevoKey','s_brevoKey']].forEach(([f,k])=>{const v=document.getElementById(f).value.trim();if(v)localStorage.setItem(k,v);});
   document.getElementById('settingsStatus').textContent='✅ Settings saved!';
   document.getElementById('settingsStatus').style.color='var(--accent)';
   checkSetup();toast('Settings saved!');
