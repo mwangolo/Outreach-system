@@ -7,12 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0A0A0A;--panel:#111;--card:#181818;--border:rgba(255,255,255,0.06);
-  --white:#F5F4F0;--muted:#555;--muted2:#888;
-  --accent:#00C896;--accent2:#00A37A;
-  --fd:'Syne',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;
-}
+:root{--bg:#0A0A0A;--panel:#111;--card:#181818;--border:rgba(255,255,255,0.06);--white:#F5F4F0;--muted:#555;--muted2:#888;--accent:#00C896;--accent2:#00A37A;--fd:'Syne',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--white);font-family:var(--fb);-webkit-font-smoothing:antialiased;font-size:15px}
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
@@ -59,7 +54,6 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);-webkit-font-
 .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .btn-next{width:100%;padding:14px;border-radius:8px;background:var(--accent);color:#000;font-family:var(--fd);font-weight:800;font-size:15px;border:none;cursor:pointer;transition:background .2s;margin-top:8px}
 .btn-next:hover{background:var(--accent2)}
-.btn-next:disabled{background:#222;color:#444;cursor:not-allowed}
 .btn-back{background:none;border:none;color:var(--muted);font-family:var(--fm);font-size:12px;cursor:pointer;margin-top:12px;display:block;text-align:center;width:100%;padding:8px}
 .btn-back:hover{color:var(--white)}
 .color-options{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
@@ -75,7 +69,6 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);-webkit-font-
 @keyframes spin{to{transform:rotate(360deg)}}
 .gen-title{font-family:var(--fd);font-size:20px;font-weight:800;margin-bottom:8px}
 .gen-steps{font-size:13px;color:var(--muted2);line-height:2}
-.gen-step-item{transition:color .3s}
 .gen-step-item.done{color:var(--accent)}
 .gen-step-item.active{color:var(--white)}
 .preview-wrap{display:none}
@@ -100,12 +93,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);-webkit-font-
 footer{padding:40px 20px;text-align:center;border-top:1px solid var(--border)}
 footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8}
 .api-banner{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.2);border-radius:8px;padding:10px 14px;font-size:12px;color:#F5C842;margin-bottom:20px;display:none}
-.api-banner a{color:#F5C842;text-decoration:underline}
-@media(max-width:600px){
-  .fg-row{grid-template-columns:1fr}
-  .cta-buttons{flex-direction:column;align-items:stretch}
-  .btn-whatsapp,.btn-email-cta{justify-content:center}
-}
+.api-banner a{color:#F5C842;text-decoration:underline;cursor:pointer}
+@media(max-width:600px){.fg-row{grid-template-columns:1fr}.cta-buttons{flex-direction:column;align-items:stretch}.btn-whatsapp,.btn-email-cta{justify-content:center}}
 </style>
 </head>
 <body>
@@ -128,21 +117,9 @@ footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8
   <p class="sec-eyebrow">How It Works</p>
   <h2 class="sec-title">Your website in 3 simple steps</h2>
   <div class="steps-grid">
-    <div class="step-card">
-      <p class="step-num">— STEP 01</p>
-      <h3 class="step-title">Tell us about your business</h3>
-      <p class="step-desc">Business name, what you do, your city, and a couple of quick details. Takes under 2 minutes.</p>
-    </div>
-    <div class="step-card">
-      <p class="step-num">— STEP 02</p>
-      <h3 class="step-title">AI builds your site</h3>
-      <p class="step-desc">Our AI writes the copy, picks the layout, and generates a complete website specifically for your business.</p>
-    </div>
-    <div class="step-card">
-      <p class="step-num">— STEP 03</p>
-      <h3 class="step-title">Get it live for $350</h3>
-      <p class="step-desc">Love your preview? We deploy it to a real domain, set up your contact form, and hand it over fully working.</p>
-    </div>
+    <div class="step-card"><p class="step-num">— STEP 01</p><h3 class="step-title">Tell us about your business</h3><p class="step-desc">Business name, what you do, your city, and a couple of quick details. Takes under 2 minutes.</p></div>
+    <div class="step-card"><p class="step-num">— STEP 02</p><h3 class="step-title">AI builds your site</h3><p class="step-desc">Our AI writes the copy, picks the layout, and generates a complete website specifically for your business.</p></div>
+    <div class="step-card"><p class="step-num">— STEP 03</p><h3 class="step-title">Get it live for $350</h3><p class="step-desc">Love your preview? We deploy it to a real domain, set up your contact form, and hand it over fully working.</p></div>
   </div>
 </section>
 
@@ -150,7 +127,7 @@ footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8
 <div class="builder-inner">
   <h2 class="builder-title">Build your free preview</h2>
   <p class="builder-sub">No sign-up. No payment. Just your website.</p>
-  <div class="api-banner" id="apiBanner">⚠️ API key not configured. <a href="#" onclick="promptApiKey()">Click here to add your Anthropic key</a> to enable AI generation.</div>
+  <div class="api-banner" id="apiBanner">⚠️ Groq API key not set. <a onclick="promptApiKey()">Click here to add it</a> and enable AI generation.</div>
   <div class="progress-bar">
     <div class="prog-step active" id="prog0"></div>
     <div class="prog-step" id="prog1"></div>
@@ -161,7 +138,7 @@ footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8
 
   <div class="form-step active" id="step0">
     <p class="step-heading">Tell us about your business</p>
-    <p class="step-hint">We'll use this to write real content for your website — not lorem ipsum.</p>
+    <p class="step-hint">We'll use this to write real content for your website.</p>
     <div class="fg"><label>Business Name *</label><input type="text" id="bName" placeholder="e.g. Mike's Auto Repair"/></div>
     <div class="fg-row">
       <div class="fg"><label>Business Type *</label>
@@ -195,7 +172,7 @@ footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8
 
   <div class="form-step" id="step2">
     <p class="step-heading">Pick your style</p>
-    <p class="step-hint">Choose the look and feel that fits your business best.</p>
+    <p class="step-hint">Choose the look and feel that fits your business.</p>
     <div class="fg"><label>Website Style *</label>
       <div class="style-options">
         <div class="style-opt selected" onclick="pickStyle(this,'professional')"><div class="style-opt-title">Professional</div><div class="style-opt-desc">Clean, trustworthy. Great for law firms, dentists, contractors.</div></div>
@@ -205,7 +182,7 @@ footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8
       </div>
     </div>
     <div class="fg"><label>Brand Color</label>
-      <div class="color-options" id="colorOptions">
+      <div class="color-options">
         <div class="color-opt selected" style="background:#2563EB" onclick="pickColor(this,'#2563EB')"></div>
         <div class="color-opt" style="background:#16A34A" onclick="pickColor(this,'#16A34A')"></div>
         <div class="color-opt" style="background:#DC2626" onclick="pickColor(this,'#DC2626')"></div>
@@ -245,7 +222,7 @@ footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8
 
   <div class="preview-wrap" id="previewWrap">
     <h3 style="font-family:var(--fd);font-size:18px;font-weight:800;margin-bottom:6px;text-align:center">🎉 Your website is ready!</h3>
-    <p style="font-size:13px;color:var(--muted2);text-align:center;margin-bottom:20px">Here's a live preview. Scroll inside to see the full site.</p>
+    <p style="font-size:13px;color:var(--muted2);text-align:center;margin-bottom:20px">Scroll inside to see the full site.</p>
     <div class="preview-header">
       <div class="preview-dots"><div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div></div>
       <span class="preview-label" id="previewUrl">yoursite.com</span>
@@ -269,40 +246,37 @@ footer p{font-family:var(--fm);font-size:11px;color:var(--muted);line-height:1.8
 
 <footer>
   <p>Built by <strong style="color:var(--white)">Stephen</strong> · Full-Stack Developer · Nairobi, Kenya<br/>
-  Questions? <a href="#" id="footerEmail" style="color:var(--accent);text-decoration:none">Email us</a> · <a href="#" id="footerWa" style="color:var(--accent);text-decoration:none" target="_blank">WhatsApp</a></p>
+  Questions? <a href="mailto:stephenmwangolo@gmail.com" style="color:var(--accent);text-decoration:none">stephenmwangolo@gmail.com</a> · <a href="https://wa.me/254700000000" style="color:var(--accent);text-decoration:none" target="_blank" id="footerWa">WhatsApp</a></p>
 </footer>
 
 <script>
 const CONFIG={
-  apiKey:localStorage.getItem('wb_apikey')||'',
-  whatsapp:localStorage.getItem('wb_wa')||'254719477081',
-  email:localStorage.getItem('wb_email')||'stephenmwagolo@gmail.com',
-  yourName:localStorage.getItem('wb_name')||'Stephen'
+  whatsapp: localStorage.getItem('wb_wa')||'254700000000',
+  email: 'stephenmwangolo@gmail.com',
+  yourName: 'Stephen'
 };
-let pickedStyleVal='professional',pickedColorVal='#2563EB';
+let pickedStyleVal='professional', pickedColorVal='#2563EB';
 
 (function(){
-  if(!CONFIG.apiKey) document.getElementById('apiBanner').style.display='block';
+  if(!localStorage.getItem('wb_groqkey')) document.getElementById('apiBanner').style.display='block';
   updateLinks();
 })();
 
 function updateLinks(){
   const wa=`https://wa.me/${CONFIG.whatsapp}?text=Hi%20${encodeURIComponent(CONFIG.yourName)}!%20I%20just%20saw%20my%20website%20preview%20and%20I%27d%20love%20to%20get%20it%20live!`;
-  const mail=`mailto:${CONFIG.email}?subject=I%20want%20my%20website%20live!`;
   document.getElementById('waBtn').href=wa;
-  document.getElementById('emailBtn').href=mail;
-  document.getElementById('footerEmail').href=`mailto:${CONFIG.email}`;
-  document.getElementById('footerEmail').textContent=CONFIG.email;
+  document.getElementById('emailBtn').href=`mailto:${CONFIG.email}?subject=I%20want%20my%20website%20live!`;
   document.getElementById('footerWa').href=wa;
 }
 
 function promptApiKey(){
-  const k=prompt('Paste your Anthropic API key (starts with sk-ant-):');
-  if(k&&k.startsWith('sk-')){
-    localStorage.setItem('wb_apikey',k);
-    CONFIG.apiKey=k;
+  const k=prompt('Paste your Groq API key (starts with gsk_):');
+  if(k&&k.startsWith('gsk_')){
+    localStorage.setItem('wb_groqkey',k);
     document.getElementById('apiBanner').style.display='none';
-    alert('✅ API key saved!');
+    alert('✅ Groq API key saved!');
+  } else {
+    alert('Invalid key. Should start with gsk_');
   }
 }
 
@@ -360,8 +334,10 @@ function getData(){
 }
 
 async function generateWebsite(){
-  if(!CONFIG.apiKey){promptApiKey();if(!CONFIG.apiKey)return;}
-  goStep(4);animateGenSteps();
+  const groqKey=localStorage.getItem('wb_groqkey');
+  if(!groqKey){promptApiKey();if(!localStorage.getItem('wb_groqkey'))return;}
+  goStep(4);
+  animateGenSteps();
   const d=getData();
   const styleGuides={
     professional:'Clean, professional, trustworthy. White/light background. Conservative layout.',
@@ -369,6 +345,7 @@ async function generateWebsite(){
     warm:'Warm cream/white background. Friendly, inviting, bright. Rounded corners.',
     minimal:'Ultra-clean white. Lots of whitespace. Elegant simplicity.'
   };
+
   const prompt=`You are an expert web designer. Create a complete, beautiful single-page business website in pure HTML+CSS (no external dependencies except Google Fonts).
 
 Business Details:
@@ -382,28 +359,39 @@ Business Details:
 - Address: ${d.address||d.city||'Local area'}
 ${d.tagline?'- Tagline: '+d.tagline:''}
 
-Design: ${styleGuides[d.style]} Primary color: ${d.color}. Must be fully mobile-responsive. Use Google Fonts.
+Design: ${styleGuides[d.style]} Primary color: ${d.color}. Must be fully mobile-responsive. Use Google Fonts (1-2 families max).
 
-Sections: 1) Nav with business name + CTA button 2) Hero with headline + subheadline + CTA 3) About section 4) Services grid 5) Contact section with phone/email/address + form 6) Footer
+Sections: 1) Nav with business name + CTA button 2) Hero with headline + subheadline + CTA 3) About section 4) Services grid 5) Contact section with phone/email/address + simple form 6) Footer
 
-Rules: Write ONLY the complete HTML document starting with <!DOCTYPE html>. No explanation. No markdown. No code fences. Use REAL content. All CSS in a style tag.`;
+IMPORTANT: Write ONLY the complete HTML document. Start with <!DOCTYPE html> end with </html>. No explanation. No markdown. No code fences. Use REAL content from above. All CSS in a style tag in head.`;
 
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':CONFIG.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
+      body:JSON.stringify({
+        model:'llama3-70b-8192',
+        max_tokens:4000,
+        messages:[
+          {role:'system',content:'You are an expert web designer. Output only valid HTML. Never add explanations, markdown, or code fences.'},
+          {role:'user',content:prompt}
+        ]
+      })
     });
+
     const data=await res.json();
-    let html=data.content.map(c=>c.text||'').join('');
+    if(data.error)throw new Error(data.error.message);
+    let html=data.choices[0].message.content;
     html=html.replace(/```html|```/g,'').trim();
+
     document.querySelectorAll('.form-step').forEach(el=>el.classList.remove('active'));
     document.getElementById('previewWrap').style.display='block';
     document.getElementById('previewUrl').textContent=d.name.toLowerCase().replace(/\s+/g,'')+'.com';
     document.getElementById('previewFrame').srcdoc=html;
     document.getElementById('builder').scrollIntoView({behavior:'smooth',block:'start'});
+
   }catch(e){
-    alert('Error: '+e.message+'\n\nCheck your API key in Settings.');
+    alert('Error: '+e.message);
     goStep(3);
   }
 }
@@ -411,7 +399,7 @@ Rules: Write ONLY the complete HTML document starting with <!DOCTYPE html>. No e
 function animateGenSteps(){
   const ids=['gs0','gs1','gs2','gs3','gs4'];
   const done=['✓ Writing your homepage content…','✓ Designing your layout…','✓ Adding your services section…','✓ Setting up contact section…','✓ Finalizing your website…'];
-  ids.forEach(id=>{document.getElementById(id).className='gen-step-item';});
+  ids.forEach(id=>document.getElementById(id).className='gen-step-item');
   document.getElementById('gs0').className='gen-step-item active';
   ids.forEach((id,i)=>{
     setTimeout(()=>{
