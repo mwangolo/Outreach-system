@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Outreach System</title>
+<title>Outreach System — Stephen</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0D0D0D;--panel:#141414;--card:#1A1A1A;--border:rgba(255,255,255,0.07);--white:#F5F4F0;--muted:#555;--accent:#00C896;--red:#FF4545;--yellow:#F5C842;--blue:#4E9FFF;--purple:#9B6DFF;--fd:'Syne',sans-serif;--fm:'JetBrains Mono',monospace;--fb:'Inter',sans-serif}
+:root{--bg:#0D0D0D;--panel:#141414;--card:#1A1A1A;--card2:#202020;--border:rgba(255,255,255,0.07);--white:#F5F4F0;--muted:#555;--accent:#00C896;--red:#FF4545;--yellow:#F5C842;--blue:#4E9FFF;--purple:#9B6DFF;--fd:'Syne',sans-serif;--fm:'JetBrains Mono',monospace;--fb:'Inter',sans-serif;}
 body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased}
 .tab-bar{display:flex;background:var(--panel);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
-.tab{flex:1;padding:13px 6px;font-family:var(--fm);font-size:11px;text-align:center;color:var(--muted);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
+.tab{flex:1;padding:13px 4px;font-family:var(--fm);font-size:10px;text-align:center;color:var(--muted);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 .page{display:none;padding:16px;padding-bottom:80px}
 .page.active{display:block}
@@ -31,6 +31,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 .btn-primary:disabled{background:#333;color:#555;cursor:not-allowed;opacity:1}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--white);font-family:var(--fm);font-size:12px;margin-top:8px}
 .btn-danger{background:transparent;border:1px solid var(--red);color:var(--red);margin-top:8px}
+.btn-green{background:#25D366;color:#000;margin-top:8px}
 .chip{background:var(--card);border:1px solid var(--border);color:var(--muted);font-family:var(--fm);font-size:11px;padding:6px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .chip.active{background:rgba(0,200,150,.12);border-color:var(--accent);color:var(--accent)}
 .niche-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
@@ -40,7 +41,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 .niche-name{font-family:var(--fd);font-size:12px;font-weight:700}
 .niche-hint{font-size:10px;color:var(--muted);margin-top:2px}
 .divider{height:1px;background:var(--border);margin:16px 0}
-.ai-box{background:#202020;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:12px}
+.ai-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:12px}
 .ai-label{font-family:var(--fm);font-size:9px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
 .ai-subject{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px}
 .ai-body{font-size:13px;line-height:1.7;white-space:pre-wrap}
@@ -48,8 +49,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 .action-row .btn{margin-top:0;flex:1;padding:10px}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(0,200,150,.3);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#000;font-family:var(--fm);font-size:12px;padding:10px 20px;border-radius:20px;opacity:0;transition:all .3s;z-index:999;pointer-events:none}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#000;font-family:var(--fm);font-size:12px;padding:10px 20px;border-radius:20px;opacity:0;transition:all .3s;z-index:999;pointer-events:none;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.error{background:var(--red);color:#fff}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}
 .stat-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 8px;text-align:center}
 .stat-n{font-family:var(--fd);font-size:20px;font-weight:800;line-height:1}
@@ -66,11 +68,17 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .modal-title{font-family:var(--fd);font-size:16px;font-weight:800}
 .btn-close{background:var(--card);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px}
-.key-warning{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.3);border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--yellow);line-height:1.6}
+.setup-banner{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.2);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--yellow);margin-bottom:16px;line-height:1.7;display:none}
+.success-banner{background:rgba(0,200,150,.07);border:1px solid rgba(0,200,150,.2);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--accent);margin-bottom:16px;display:none}
+.send-status{font-family:var(--fm);font-size:11px;padding:10px 12px;border-radius:8px;margin-top:10px;text-align:center;display:none}
+.send-status.sending{background:rgba(78,159,255,.1);color:var(--blue);display:block}
+.send-status.sent{background:rgba(0,200,150,.1);color:var(--accent);display:block}
+.send-status.failed{background:rgba(255,69,69,.1);color:var(--red);display:block}
+.builder-link-box{background:rgba(0,200,150,.05);border:1px solid rgba(0,200,150,.15);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.6}
+.builder-link-box strong{color:var(--accent)}
 </style>
 </head>
 <body>
-
 <div class="tab-bar">
   <button class="tab active" onclick="switchTab('find')">🔍 Find</button>
   <button class="tab" onclick="switchTab('outreach')">✉️ Outreach</button>
@@ -94,28 +102,24 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
   <div class="divider"></div>
   <p class="sec-label">How to spot a lead</p>
   <div class="card" style="font-size:13px;color:#888;line-height:1.9">
-    ✅ <strong style="color:#F5F4F0">No "Website" button</strong> on their Maps listing<br/>
+    ✅ <strong style="color:#F5F4F0">No "Website" button</strong> on Maps listing<br/>
     ✅ <strong style="color:#F5F4F0">3.5–5 stars</strong> with 20+ reviews = can pay<br/>
     🟡 Slow or broken mobile site = still a lead<br/>
     ❌ Skip if under 10 reviews or brand new
   </div>
-  <button class="btn btn-outline" onclick="switchTab('outreach')">+ Log a Lead I Found →</button>
+  <button class="btn btn-outline" onclick="switchTab('outreach')" style="margin-top:12px">+ Log a Lead I Found →</button>
 </div>
 
 <!-- OUTREACH -->
 <div class="page" id="page-outreach">
   <p class="page-title">AI Outreach</p>
-  <p class="page-sub">FILL IN LEAD → AI WRITES THE EMAIL</p>
-  <div id="noKeyWarning" class="key-warning" style="display:none">
-    ⚠️ No API key set. Go to ⚙️ Settings tab and paste your Anthropic API key to enable AI email generation.
-  </div>
+  <p class="page-sub">AI WRITES + AUTO-SENDS VIA BREVO</p>
+  <div class="setup-banner" id="setupBanner">⚠️ Setup incomplete. Go to ⚙️ Settings and add your Anthropic + Brevo API keys.</div>
+  <div class="success-banner" id="successBanner">✅ All systems ready. Emails auto-send via Brevo.</div>
+  <div class="builder-link-box">🔗 Every email includes a link to your <strong>Free Website Builder</strong> — clients see their website before paying you.</div>
   <div class="form-row">
-    <div class="form-group">
-      <label>Business Name *</label>
-      <input type="text" id="oName" placeholder="Mike's BBQ"/>
-    </div>
-    <div class="form-group">
-      <label>Niche *</label>
+    <div class="form-group"><label>Business Name *</label><input type="text" id="oName" placeholder="Mike's BBQ"/></div>
+    <div class="form-group"><label>Niche *</label>
       <select id="oNiche">
         <option value="">Select…</option>
         <option>Restaurant</option><option>Plumber</option><option>Hair Salon</option>
@@ -125,12 +129,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
     </div>
   </div>
   <div class="form-row">
-    <div class="form-group">
-      <label>City, State</label>
-      <input type="text" id="oCity" placeholder="Austin, TX"/>
-    </div>
-    <div class="form-group">
-      <label>Website situation</label>
+    <div class="form-group"><label>City, State</label><input type="text" id="oCity" placeholder="Austin, TX"/></div>
+    <div class="form-group"><label>Website situation</label>
       <select id="oSite">
         <option value="none">No website at all</option>
         <option value="bad">Bad / slow / broken</option>
@@ -138,33 +138,21 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
       </select>
     </div>
   </div>
-  <div class="form-group">
-    <label>Owner Name (optional)</label>
-    <input type="text" id="oOwner" placeholder="e.g. Mike"/>
-  </div>
-  <div class="form-group">
-    <label>Their Email *</label>
-    <input type="email" id="oEmail" placeholder="owner@business.com"/>
-  </div>
-  <div class="form-group">
-    <label>Anything notable (optional)</label>
-    <input type="text" id="oNote" placeholder="e.g. Great reviews, active on Instagram"/>
-  </div>
-  <button class="btn btn-primary" id="generateBtn" onclick="generateEmail()">✨ Generate Outreach Email</button>
+  <div class="form-group"><label>Owner Name (optional)</label><input type="text" id="oOwner" placeholder="e.g. Mike"/></div>
+  <div class="form-group"><label>Their Email * (required to auto-send)</label><input type="email" id="oEmail" placeholder="owner@business.com"/></div>
+  <div class="form-group"><label>Anything notable (optional)</label><input type="text" id="oNote" placeholder="e.g. Great reviews, active on Instagram"/></div>
+  <button class="btn btn-primary" id="generateBtn" onclick="generateAndSend()">✨ Generate & Send Email</button>
+  <div class="send-status" id="sendStatus"></div>
   <div id="aiOutput" style="display:none">
     <div class="divider"></div>
     <div class="ai-box">
-      <div class="ai-label">✨ AI-Generated Email</div>
+      <div class="ai-label">✅ Email Sent via Brevo</div>
       <div class="ai-subject" id="aiSubject"></div>
       <div class="ai-body" id="aiBody"></div>
     </div>
     <div class="action-row">
-      <button class="btn btn-primary" onclick="sendEmail()">📤 Open Email App</button>
       <button class="btn btn-outline" style="margin-top:0" onclick="copyEmail()">📋 Copy</button>
-    </div>
-    <div class="action-row" style="margin-top:6px">
-      <button class="btn btn-outline" style="margin-top:0" onclick="saveToPipeline()">💾 Save to Pipeline</button>
-      <button class="btn btn-outline" style="margin-top:0" onclick="generateEmail()">🔄 Regenerate</button>
+      <button class="btn btn-outline" style="margin-top:0" onclick="generateAndSend()">🔄 Resend</button>
     </div>
   </div>
 </div>
@@ -172,7 +160,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 <!-- PIPELINE -->
 <div class="page" id="page-pipeline">
   <p class="page-title">Pipeline</p>
-  <p class="page-sub">TRACK EVERY LEAD'S STATUS</p>
+  <p class="page-sub">TRACK EVERY LEAD</p>
   <div class="stats-row">
     <div class="stat-box"><div class="stat-n" id="pTotal">0</div><div class="stat-l">Total</div></div>
     <div class="stat-box"><div class="stat-n" style="color:#F5C842" id="pSent">0</div><div class="stat-l">Sent</div></div>
@@ -187,35 +175,36 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 <div class="page" id="page-settings">
   <p class="page-title">Settings</p>
   <p class="page-sub">ONE-TIME SETUP</p>
-  <div class="card" style="font-size:13px;line-height:1.8;color:#888;margin-bottom:16px">
-    To generate AI emails outside of Claude chat, you need your own Anthropic API key.<br/><br/>
-    👉 Go to <strong style="color:var(--accent)">console.anthropic.com</strong><br/>
-    → Sign up free → API Keys → Create Key<br/><br/>
-    New accounts get <strong style="color:var(--white)">$5 free credits</strong> — enough for ~500 emails.
-  </div>
-  <div class="form-group">
-    <label>Anthropic API Key</label>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-…"/>
-  </div>
-  <button class="btn btn-primary" onclick="saveApiKey()">Save API Key</button>
-  <div id="keyStatus" style="font-family:monospace;font-size:11px;color:var(--muted);margin-top:10px;text-align:center"></div>
+  <p class="sec-label">Your Info</p>
+  <div class="form-group"><label>Your Name</label><input type="text" id="sName" placeholder="Stephen" value="Stephen"/></div>
+  <div class="form-group"><label>Your Email (Brevo sender)</label><input type="email" id="sEmail" placeholder="stephenmwangolo@gmail.com" value="stephenmwangolo@gmail.com"/></div>
+  <div class="form-group"><label>Your WhatsApp Number</label><input type="text" id="sWhatsapp" placeholder="254700000000"/></div>
+  <div class="form-group"><label>Website Builder URL</label><input type="text" id="sBuilderUrl" value="https://outreachsyste.netlify.app/website-builder.html"/></div>
   <div class="divider"></div>
-  <p class="sec-label">Your Info (used in emails)</p>
-  <div class="form-group">
-    <label>Your Name</label>
-    <input type="text" id="sName" placeholder="Stephen"/>
+  <p class="sec-label">API Keys</p>
+  <div class="card" style="font-size:12px;color:#888;line-height:1.8;margin-bottom:14px">
+    🤖 <strong style="color:var(--white)">Anthropic key</strong> — generates personalized emails<br/>
+    Get at <strong style="color:var(--accent)">console.anthropic.com</strong> → API Keys<br/><br/>
+    📧 <strong style="color:var(--white)">Brevo key</strong> — sends emails automatically<br/>
+    Get at <strong style="color:var(--accent)">app.brevo.com</strong> → Settings → API Keys
   </div>
-  <div class="form-group">
-    <label>Your Portfolio URL</label>
-    <input type="text" id="sPortfolio" placeholder="https://yoursite.netlify.app"/>
-  </div>
-  <div class="form-group">
-    <label>Your WhatsApp Number</label>
-    <input type="text" id="sWhatsapp" placeholder="+254700000000"/>
-  </div>
-  <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+  <div class="form-group"><label>Anthropic API Key</label><input type="password" id="sAnthropicKey" placeholder="sk-ant-…"/></div>
+  <div class="form-group"><label>Brevo API Key</label><input type="password" id="sBrevoKey" placeholder="xkeysib-…"/></div>
+  <button class="btn btn-primary" onclick="saveSettings()">Save All Settings</button>
+  <div id="settingsStatus" style="font-family:monospace;font-size:11px;color:var(--muted);margin-top:10px;text-align:center"></div>
   <div class="divider"></div>
-  <button class="btn btn-danger" onclick="clearAllData()">Clear All Data</button>
+  <p class="sec-label">Daily Goal</p>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+      <span style="font-family:var(--fm);font-size:10px;color:var(--muted)">TODAY'S OUTREACH</span>
+      <span style="font-family:var(--fm);font-size:10px;color:var(--accent)" id="dailyCount">0 / 10 emails</span>
+    </div>
+    <div style="width:100%;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+      <div id="dailyBar" style="height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width .4s"></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <button class="btn btn-danger" onclick="clearData()">Clear All Data</button>
 </div>
 
 <!-- EDIT MODAL -->
@@ -225,21 +214,19 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
       <span class="modal-title" id="editName">Edit Lead</span>
       <button class="btn-close" onclick="closeEdit()">✕</button>
     </div>
-    <div class="form-group">
-      <label>Update Status</label>
+    <div class="form-group"><label>Update Status</label>
       <select id="editStatus">
         <option value="new">New</option>
-        <option value="contacted">Contacted — email sent</option>
+        <option value="contacted">Email Sent</option>
         <option value="replied">Replied — in conversation</option>
         <option value="closed">Won — client signed 🎉</option>
         <option value="lost">Lost — not interested</option>
       </select>
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="editNotes" placeholder="Any update from this lead…"></textarea>
-    </div>
+    <div class="form-group"><label>Notes</label><textarea id="editNotes" placeholder="Any update…"></textarea></div>
+    <div id="editEmailDisplay" style="font-family:monospace;font-size:11px;color:var(--muted);margin-bottom:12px"></div>
     <button class="btn btn-primary" onclick="saveEdit()">Save Update</button>
+    <button class="btn btn-green" id="reachBtn" onclick="reachOnWhatsApp()">💬 Follow Up on WhatsApp</button>
     <button class="btn btn-danger" onclick="deleteLead()">Remove Lead</button>
   </div>
 </div>
@@ -247,230 +234,175 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
 <div class="toast" id="toast"></div>
 
 <script>
-const NICHES=[{icon:"🍽️",label:"Restaurant",q:"restaurant"},{icon:"🔧",label:"Plumber",q:"plumber"},{icon:"💇",label:"Hair Salon",q:"hair salon"},{icon:"🚗",label:"Auto Repair",q:"auto repair shop"},{icon:"⚡",label:"Electrician",q:"electrician"},{icon:"🦷",label:"Dentist",q:"dentist"},{icon:"⚖️",label:"Law Firm",q:"law firm"},{icon:"🏥",label:"Chiropractor",q:"chiropractor"}];
+const NICHES=[
+  {icon:"🍽️",label:"Restaurant",q:"restaurant",hint:"Tons of leads, often no site"},
+  {icon:"🔧",label:"Plumber",q:"plumber",hint:"High revenue, old sites"},
+  {icon:"💇",label:"Hair Salon",q:"hair salon",hint:"Active on Instagram, no site"},
+  {icon:"🚗",label:"Auto Repair",q:"auto repair shop",hint:"Local, loyal customers"},
+  {icon:"⚡",label:"Electrician",q:"electrician",hint:"High budget clients"},
+  {icon:"🦷",label:"Dentist",q:"dentist",hint:"Professional, big spend"},
+  {icon:"⚖️",label:"Law Firm",q:"law firm",hint:"Highest budgets"},
+  {icon:"🏥",label:"Chiropractor",q:"chiropractor",hint:"Recurring clientele"}
+];
 const CITIES=["Houston TX","Chicago IL","Phoenix AZ","Philadelphia PA","San Antonio TX","Dallas TX","Jacksonville FL","Austin TX","Columbus OH","Memphis TN","Louisville KY","Baltimore MD"];
 const STATUS_COLORS={new:"#4E9FFF",contacted:"#F5C842",replied:"#00C896",closed:"#9B6DFF",lost:"#FF4545"};
 const STATUS_LABELS={new:"New",contacted:"Email Sent",replied:"Replied",closed:"Won 🎉",lost:"Lost"};
+const LKEY='stephen_outreach_v3';
+let leads=JSON.parse(localStorage.getItem(LKEY)||'[]');
+let pickedNiche=null,pickedCity='',currentLead=null,editingId=null,pipeFilter='all';
 
-let leads=JSON.parse(localStorage.getItem("outreach_leads")||"[]");
-let pickedNiche=null,pickedCity="",currentLead=null,editingId=null,pipeFilter="all";
-
-// INIT
 (function init(){
-  // Niche grid
-  document.getElementById("nicheGrid").innerHTML=NICHES.map(n=>`
-    <div class="niche-btn" onclick="pickNiche(this,'${n.label}','${n.q}')">
-      <div class="niche-icon">${n.icon}</div>
-      <div class="niche-name">${n.label}</div>
-      <div class="niche-hint">${n.hint||""}</div>
-    </div>`).join("");
-  // City chips
-  document.getElementById("cityChips").innerHTML=CITIES.map(c=>`
-    <button class="chip" onclick="pickCity(this,'${c}')">${c}</button>`).join("");
-  // Pipeline filters
-  document.getElementById("pipeFilters").innerHTML=
-    ["all","new","contacted","replied","closed","lost"].map(f=>`
-    <button class="chip${f==="all"?" active":""}" onclick="setPipeFilter(this,'${f}')">${f==="all"?"All":STATUS_LABELS[f]}</button>`).join("");
-  // Load settings
-  const n=localStorage.getItem("s_name"),p=localStorage.getItem("s_portfolio"),w=localStorage.getItem("s_whatsapp");
-  if(n) document.getElementById("sName").value=n;
-  if(p) document.getElementById("sPortfolio").value=p;
-  if(w) document.getElementById("sWhatsapp").value=w;
-  // API key status
-  const key=localStorage.getItem("anthropic_key");
-  if(key){document.getElementById("keyStatus").textContent="✅ API key saved";document.getElementById("keyStatus").style.color="var(--accent)";}
-  document.getElementById("noKeyWarning").style.display=key?"none":"block";
+  document.getElementById('nicheGrid').innerHTML=NICHES.map(n=>`<div class="niche-btn" onclick="pickNiche(this,'${n.label}','${n.q}')"><div class="niche-icon">${n.icon}</div><div class="niche-name">${n.label}</div><div class="niche-hint">${n.hint}</div></div>`).join('');
+  document.getElementById('cityChips').innerHTML=CITIES.map(c=>`<button class="chip" onclick="pickCity(this,'${c}')">${c}</button>`).join('');
+  document.getElementById('pipeFilters').innerHTML=['all','new','contacted','replied','closed','lost'].map(f=>`<button class="chip${f==='all'?' active':''}" onclick="setPipeFilter(this,'${f}')">${f==='all'?'All':STATUS_LABELS[f]}</button>`).join('');
+  loadSettings();checkSetup();updateDailyGoal();
 })();
 
-// TABS
+function loadSettings(){
+  [['sName','s_name'],['sEmail','s_email'],['sWhatsapp','s_whatsapp'],['sBuilderUrl','s_builderUrl'],['sAnthropicKey','s_anthropicKey'],['sBrevoKey','s_brevoKey']].forEach(([f,k])=>{const v=localStorage.getItem(k);if(v)document.getElementById(f).value=v;});
+}
+
+function checkSetup(){
+  const ok=localStorage.getItem('s_anthropicKey')&&localStorage.getItem('s_brevoKey');
+  document.getElementById('setupBanner').style.display=ok?'none':'block';
+  document.getElementById('successBanner').style.display=ok?'block':'none';
+}
+
 function switchTab(t){
-  document.querySelectorAll(".tab").forEach((el,i)=>el.classList.toggle("active",["find","outreach","pipeline","settings"][i]===t));
-  document.querySelectorAll(".page").forEach(el=>el.classList.remove("active"));
-  document.getElementById("page-"+t).classList.add("active");
-  if(t==="pipeline") renderPipeline();
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['find','outreach','pipeline','settings'][i]===t));
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+t).classList.add('active');
+  if(t==='pipeline')renderPipeline();
+  if(t==='settings')updateDailyGoal();
 }
 
-// FIND TAB
-function pickNiche(el,label,q){
-  document.querySelectorAll(".niche-btn").forEach(b=>b.classList.remove("active"));
-  el.classList.add("active");
-  pickedNiche={label,q};
-  checkReady();
-}
-function pickCity(el,c){
-  document.querySelectorAll("#cityChips .chip").forEach(b=>b.classList.remove("active"));
-  el.classList.add("active");
-  pickedCity=c;
-  document.getElementById("customCity").value="";
-  checkReady();
-}
-function customCityChange(v){
-  document.querySelectorAll("#cityChips .chip").forEach(b=>b.classList.remove("active"));
-  pickedCity=v.trim();
-  checkReady();
-}
-function checkReady(){
-  const btn=document.getElementById("mapsBtn");
-  const ok=pickedNiche&&pickedCity;
-  btn.disabled=!ok;
-}
-function openMaps(){
-  const q=encodeURIComponent(pickedNiche.q+" in "+pickedCity);
-  window.open("https://www.google.com/maps/search/"+q,"_blank");
-  toast("Google Maps opened! Find businesses with no 'Website' button.");
-}
+function pickNiche(el,label,q){document.querySelectorAll('.niche-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');pickedNiche={label,q};checkReady();}
+function pickCity(el,c){document.querySelectorAll('#cityChips .chip').forEach(b=>b.classList.remove('active'));el.classList.add('active');pickedCity=c;document.getElementById('customCity').value='';checkReady();}
+function customCityChange(v){document.querySelectorAll('#cityChips .chip').forEach(b=>b.classList.remove('active'));pickedCity=v.trim();checkReady();}
+function checkReady(){document.getElementById('mapsBtn').disabled=!(pickedNiche&&pickedCity);}
+function openMaps(){window.open('https://www.google.com/maps/search/'+encodeURIComponent(pickedNiche.q+' in '+pickedCity),'_blank');toast('Google Maps opened!');}
 
-// OUTREACH TAB
-async function generateEmail(){
-  const key=localStorage.getItem("anthropic_key");
-  if(!key){toast("Add your API key in ⚙️ Settings first.");switchTab("settings");return;}
-  const name=document.getElementById("oName").value.trim();
-  const niche=document.getElementById("oNiche").value;
-  if(!name||!niche){toast("Enter business name and niche.");return;}
-  const city=document.getElementById("oCity").value.trim();
-  const site=document.getElementById("oSite").value;
-  const owner=document.getElementById("oOwner").value.trim();
-  const email=document.getElementById("oEmail").value.trim();
-  const note=document.getElementById("oNote").value.trim();
-  const myName=localStorage.getItem("s_name")||"Stephen";
-  const myPortfolio=localStorage.getItem("s_portfolio")||"";
-  const siteDesc={none:"they have no website at all",bad:"their website is slow and broken on mobile",old:"their website looks extremely outdated"}[site];
-  const greeting=owner?`Hi ${owner}`:"Hi there";
-  const btn=document.getElementById("generateBtn");
-  btn.innerHTML='<span class="spinner"></span>Writing email…';btn.disabled=true;
-  document.getElementById("aiOutput").style.display="none";
+async function generateAndSend(){
+  const ak=localStorage.getItem('s_anthropicKey');
+  const bk=localStorage.getItem('s_brevoKey');
+  if(!ak||!bk){toast('Add API keys in ⚙️ Settings first.');switchTab('settings');return;}
+  const name=document.getElementById('oName').value.trim();
+  const niche=document.getElementById('oNiche').value;
+  const email=document.getElementById('oEmail').value.trim();
+  if(!name||!niche){toast('Enter business name and niche.');return;}
+  if(!email){toast('Enter their email to auto-send.');return;}
+  const city=document.getElementById('oCity').value.trim();
+  const site=document.getElementById('oSite').value;
+  const owner=document.getElementById('oOwner').value.trim();
+  const note=document.getElementById('oNote').value.trim();
+  const myName=localStorage.getItem('s_name')||'Stephen';
+  const myEmail=localStorage.getItem('s_email')||'stephenmwangolo@gmail.com';
+  const builderUrl=localStorage.getItem('s_builderUrl')||'https://outreachsyste.netlify.app/website-builder.html';
+  const siteDesc={none:'they have no website at all',bad:'their website is slow and broken on mobile',old:'their website looks extremely outdated'}[site];
+  const greeting=owner?`Hi ${owner}`:'Hi there';
+  const btn=document.getElementById('generateBtn');
+  btn.innerHTML='<span class="spinner"></span>Generating…';btn.disabled=true;
+  document.getElementById('aiOutput').style.display='none';
+  document.getElementById('sendStatus').className='send-status sending';
+  document.getElementById('sendStatus').textContent='⟳ Writing personalized email with AI…';
   try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:800,messages:[{role:"user",content:`You are ${myName}, a freelance full-stack web developer sending a cold email to a US small business owner. Write a short, warm, non-salesy cold email that feels personal and human.
+    const aiRes=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':ak,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:`You are ${myName}, a freelance full-stack web developer sending a cold email to a US small business owner. Write a short, warm, personalized cold email.
 
-Business: ${name} | Niche: ${niche} | City: ${city||"USA"} | Website: ${siteDesc}${note?" | Note: "+note:""}
-${myPortfolio?"Your portfolio: "+myPortfolio:""}
+Business: ${name} | Niche: ${niche} | City: ${city||'USA'} | Website: ${siteDesc}${note?' | Note: '+note:''}
+
+You help small businesses get professional websites live in 10 days from $350. You offer a FREE instant website preview where they see their website before paying.
 
 Format EXACTLY:
 SUBJECT: [subject line]
 ---
 [email body starting with "${greeting},"]
 
-Rules: Under 120 words. Sound human. Mention their specific website situation. End with one soft question. No bullet points. Sign off as: ${myName} | Full-Stack Developer`}]})
-    });
-    const data=await res.json();
-    const text=data.content.map(c=>c.text||"").join("");
-    const parts=text.split("---");
-    const subject=(parts[0]||"").replace("SUBJECT:","").trim();
+Rules: Under 150 words. Sound human. Mention their website situation. Mention the free preview tool. Include this exact line: "👉 See a free preview of your website here: ${builderUrl}" End with one soft question. No bullet points. Sign off: ${myName} | Full-Stack Developer | ${myEmail}`}]})});
+    const aiData=await aiRes.json();
+    if(aiData.error)throw new Error(aiData.error.message);
+    const text=aiData.content.map(c=>c.text||'').join('');
+    const parts=text.split('---');
+    const subject=(parts[0]||'').replace('SUBJECT:','').trim();
     const body=(parts[1]||text).trim();
-    document.getElementById("aiSubject").textContent="📧 "+subject;
-    document.getElementById("aiBody").textContent=body;
-    document.getElementById("aiOutput").style.display="block";
-    currentLead={id:uid(),name,niche,city,site,email,owner,note,status:"new",subject,body,date:today()};
-    toast("Email ready! Review and send.");
-  }catch(e){toast("Error: "+e.message);}
-  btn.innerHTML="✨ Generate Outreach Email";btn.disabled=false;
-}
-
-function sendEmail(){
-  if(!document.getElementById("oEmail").value.trim()){toast("Add their email first.");return;}
-  const subj=encodeURIComponent(document.getElementById("aiSubject").textContent.replace("📧 ",""));
-  const body=encodeURIComponent(document.getElementById("aiBody").textContent);
-  window.open(`mailto:${document.getElementById("oEmail").value.trim()}?subject=${subj}&body=${body}`);
-  toast("Email app opened — hit Send!");
+    document.getElementById('sendStatus').textContent='⟳ Sending via Brevo…';
+    const htmlBody=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#333;line-height:1.7">${body.replace(/\n/g,'<br/>').replace(builderUrl,`<a href="${builderUrl}" style="color:#00C896;font-weight:bold">${builderUrl}</a>`)}<hr style="border:none;border-top:1px solid #eee;margin:24px 0"/><p style="font-size:12px;color:#999">Sent by ${myName} · Full-Stack Developer · Reply "unsubscribe" to opt out</p></div>`;
+    const brevoRes=await fetch('https://api.brevo.com/v3/smtp/email',{method:'POST',headers:{'Content-Type':'application/json','api-key':bk},body:JSON.stringify({sender:{name:myName,email:myEmail},to:[{email,name:owner||name}],subject,htmlContent:htmlBody,textContent:body})});
+    const brevoData=await brevoRes.json();
+    if(!brevoRes.ok)throw new Error(brevoData.message||'Brevo send failed');
+    document.getElementById('aiSubject').textContent='📧 '+subject;
+    document.getElementById('aiBody').textContent=body;
+    document.getElementById('aiOutput').style.display='block';
+    document.getElementById('sendStatus').className='send-status sent';
+    document.getElementById('sendStatus').textContent='✅ Email sent to '+email;
+    currentLead={id:uid(),name,niche,city,site,email,owner,note,status:'contacted',subject,body,date:today()};
+    if(!leads.find(l=>l.email===email)){leads.unshift(currentLead);saveLeads();updateDailyGoal();}
+    toast('✅ Email sent & saved to pipeline!');
+  }catch(e){
+    document.getElementById('sendStatus').className='send-status failed';
+    document.getElementById('sendStatus').textContent='❌ '+e.message;
+    toast(e.message,'error');
+  }
+  btn.innerHTML='✨ Generate & Send Email';btn.disabled=false;
 }
 
 function copyEmail(){
-  const t=document.getElementById("aiSubject").textContent.replace("📧 ","")+"\n\n"+document.getElementById("aiBody").textContent;
-  navigator.clipboard.writeText(t).then(()=>toast("Copied!"));
+  navigator.clipboard.writeText(document.getElementById('aiSubject').textContent.replace('📧 ','')+'\n\n'+document.getElementById('aiBody').textContent).then(()=>toast('Copied!'));
 }
 
-function saveToPipeline(){
-  if(!currentLead)return;
-  if(leads.find(l=>l.id===currentLead.id)){toast("Already saved!");return;}
-  leads.unshift({...currentLead,status:"contacted"});
-  saveLeads();toast("Saved to Pipeline!");
-}
-
-// PIPELINE
-function setPipeFilter(el,f){
-  document.querySelectorAll("#pipeFilters .chip").forEach(b=>b.classList.remove("active"));
-  el.classList.add("active");pipeFilter=f;renderPipeline();
-}
+function setPipeFilter(el,f){document.querySelectorAll('#pipeFilters .chip').forEach(b=>b.classList.remove('active'));el.classList.add('active');pipeFilter=f;renderPipeline();}
 
 function renderPipeline(){
-  const s={total:leads.length,contacted:leads.filter(l=>l.status==="contacted").length,replied:leads.filter(l=>l.status==="replied").length,closed:leads.filter(l=>l.status==="closed").length};
-  document.getElementById("pTotal").textContent=s.total;
-  document.getElementById("pSent").textContent=s.contacted;
-  document.getElementById("pReplied").textContent=s.replied;
-  document.getElementById("pWon").textContent=s.closed;
-  const list=pipeFilter==="all"?leads:leads.filter(l=>l.status===pipeFilter);
-  const el=document.getElementById("pipelineList");
-  if(!list.length){
-    el.innerHTML=`<div style="text-align:center;padding:50px 20px;color:var(--muted)"><div style="font-size:32px;margin-bottom:12px">📭</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px">No leads here yet</div><div style="font-size:12px">Generate emails and save them here.</div></div>`;
-    return;
-  }
-  el.innerHTML=list.map(l=>`
-    <div class="lead-row" onclick="openEdit('${l.id}')">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="status-dot" style="background:${STATUS_COLORS[l.status]||"#555"}"></div>
-        <div>
-          <div class="lead-name">${l.name}</div>
-          <div class="lead-meta">${l.niche||""} ${l.city?"· "+l.city:""} · ${l.date||""}</div>
-        </div>
-      </div>
-      <div style="font-family:monospace;font-size:10px;color:${STATUS_COLORS[l.status]};white-space:nowrap">${STATUS_LABELS[l.status]}</div>
-    </div>`).join("");
+  document.getElementById('pTotal').textContent=leads.length;
+  document.getElementById('pSent').textContent=leads.filter(l=>l.status==='contacted').length;
+  document.getElementById('pReplied').textContent=leads.filter(l=>l.status==='replied').length;
+  document.getElementById('pWon').textContent=leads.filter(l=>l.status==='closed').length;
+  const list=pipeFilter==='all'?leads:leads.filter(l=>l.status===pipeFilter);
+  const el=document.getElementById('pipelineList');
+  if(!list.length){el.innerHTML=`<div style="text-align:center;padding:50px 20px;color:var(--muted)"><div style="font-size:32px;margin-bottom:12px">📭</div><div style="font-family:var(--fd);font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px">No leads yet</div><div style="font-size:12px">Send emails from Outreach tab — they auto-save here.</div></div>`;return;}
+  el.innerHTML=list.map(l=>`<div class="lead-row" onclick="openEdit('${l.id}')"><div style="display:flex;align-items:center;gap:10px"><div class="status-dot" style="background:${STATUS_COLORS[l.status]||'#555'}"></div><div><div class="lead-name">${l.name}</div><div class="lead-meta">${l.niche||''} ${l.city?'· '+l.city:''} · ${l.date||''}</div><div class="lead-meta" style="color:#444">${l.email||''}</div></div></div><div style="font-family:monospace;font-size:10px;color:${STATUS_COLORS[l.status]};white-space:nowrap">${STATUS_LABELS[l.status]}</div></div>`).join('');
 }
 
 function openEdit(id){
   const l=leads.find(x=>x.id===id);if(!l)return;
   editingId=id;
-  document.getElementById("editName").textContent=l.name;
-  document.getElementById("editStatus").value=l.status;
-  document.getElementById("editNotes").value=l.note||"";
-  document.getElementById("editOverlay").classList.add("open");
-}
-function closeEdit(){document.getElementById("editOverlay").classList.remove("open");}
-function handleOverlay(e){if(e.target===document.getElementById("editOverlay"))closeEdit();}
-function saveEdit(){
-  leads=leads.map(l=>l.id===editingId?{...l,status:document.getElementById("editStatus").value,note:document.getElementById("editNotes").value}:l);
-  saveLeads();closeEdit();renderPipeline();toast("Lead updated!");
-}
-function deleteLead(){
-  if(!confirm("Remove this lead?"))return;
-  leads=leads.filter(l=>l.id!==editingId);
-  saveLeads();closeEdit();renderPipeline();toast("Removed.");
+  document.getElementById('editName').textContent=l.name;
+  document.getElementById('editStatus').value=l.status;
+  document.getElementById('editNotes').value=l.note||'';
+  document.getElementById('editEmailDisplay').textContent=l.email?'📧 '+l.email:'';
+  document.getElementById('reachBtn').style.display=localStorage.getItem('s_whatsapp')?'block':'none';
+  document.getElementById('editOverlay').classList.add('open');
 }
 
-// SETTINGS
-function saveApiKey(){
-  const k=document.getElementById("apiKeyInput").value.trim();
-  if(!k||!k.startsWith("sk-")){toast("Invalid key. Should start with sk-");return;}
-  localStorage.setItem("anthropic_key",k);
-  document.getElementById("keyStatus").textContent="✅ API key saved";
-  document.getElementById("keyStatus").style.color="var(--accent)";
-  document.getElementById("noKeyWarning").style.display="none";
-  document.getElementById("apiKeyInput").value="";
-  toast("API key saved!");
+function reachOnWhatsApp(){
+  const l=leads.find(x=>x.id===editingId);if(!l)return;
+  const builderUrl=localStorage.getItem('s_builderUrl')||'https://outreachsyste.netlify.app/website-builder.html';
+  const msg=encodeURIComponent(`Hi ${l.owner||l.name}! I sent you an email about a free website preview for ${l.name}. Did you get a chance to check it? Here's the link: ${builderUrl}`);
+  window.open(`https://wa.me/?text=${msg}`,'_blank');
 }
+
+function closeEdit(){document.getElementById('editOverlay').classList.remove('open');}
+function handleOverlay(e){if(e.target===document.getElementById('editOverlay'))closeEdit();}
+function saveEdit(){leads=leads.map(l=>l.id===editingId?{...l,status:document.getElementById('editStatus').value,note:document.getElementById('editNotes').value}:l);saveLeads();closeEdit();renderPipeline();toast('Updated!');}
+function deleteLead(){if(!confirm('Remove?'))return;leads=leads.filter(l=>l.id!==editingId);saveLeads();closeEdit();renderPipeline();toast('Removed.');}
+
 function saveSettings(){
-  localStorage.setItem("s_name",document.getElementById("sName").value.trim());
-  localStorage.setItem("s_portfolio",document.getElementById("sPortfolio").value.trim());
-  localStorage.setItem("s_whatsapp",document.getElementById("sWhatsapp").value.trim());
-  toast("Settings saved!");
-}
-function clearAllData(){
-  if(!confirm("Clear ALL leads and settings? This cannot be undone."))return;
-  localStorage.clear();leads=[];renderPipeline();toast("All data cleared.");
+  [['sName','s_name'],['sEmail','s_email'],['sWhatsapp','s_whatsapp'],['sBuilderUrl','s_builderUrl'],['sAnthropicKey','s_anthropicKey'],['sBrevoKey','s_brevoKey']].forEach(([f,k])=>{const v=document.getElementById(f).value.trim();if(v)localStorage.setItem(k,v);});
+  document.getElementById('settingsStatus').textContent='✅ Settings saved!';
+  document.getElementById('settingsStatus').style.color='var(--accent)';
+  checkSetup();toast('Settings saved!');
 }
 
-// UTILS
-function saveLeads(){localStorage.setItem("outreach_leads",JSON.stringify(leads));}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
-function today(){return new Date().toISOString().split("T")[0];}
-function toast(msg){
-  const t=document.getElementById("toast");
-  t.textContent=msg;t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2800);
+function updateDailyGoal(){
+  const count=leads.filter(l=>l.date===today()&&l.status==='contacted').length;
+  document.getElementById('dailyCount').textContent=count+' / 10 emails';
+  document.getElementById('dailyBar').style.width=Math.min(100,(count/10)*100)+'%';
 }
+
+function clearData(){if(!confirm('Clear ALL leads?'))return;leads=[];saveLeads();renderPipeline();toast('Cleared.');}
+function saveLeads(){localStorage.setItem(LKEY,JSON.stringify(leads));}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function today(){return new Date().toISOString().split('T')[0];}
+function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(type==='error'?' error':'')+' show';setTimeout(()=>t.classList.remove('show'),3000);}
 </script>
 </body>
 </html>
