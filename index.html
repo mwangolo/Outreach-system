@@ -140,20 +140,27 @@ body{background:var(--bg);color:var(--white);font-family:var(--fb);font-size:14p
     </div>
   </div>
   <div class="form-group"><label>Owner Name (optional)</label><input type="text" id="oOwner" placeholder="e.g. Mike"/></div>
-  <div class="form-group"><label>Their Email * (required to auto-send)</label><input type="email" id="oEmail" placeholder="owner@business.com"/></div>
+  <div class="form-group"><label>Their Email (for auto-send)</label><input type="email" id="oEmail" placeholder="owner@business.com"/></div>
+  <div class="form-group"><label>Their WhatsApp / Phone (for WA message)</label><input type="tel" id="oPhone" placeholder="e.g. 15125550123"/></div>
   <div class="form-group"><label>Anything notable (optional)</label><input type="text" id="oNote" placeholder="e.g. Great reviews, active on Instagram"/></div>
-  <button class="btn btn-primary" id="generateBtn" onclick="generateAndSend()">✨ Generate & Send Email</button>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px">
+    <button class="btn btn-primary" id="generateBtn" onclick="generateAndSend('email')">✉️ Generate & Email</button>
+    <button class="btn btn-primary" id="waBtn" onclick="generateAndSend('whatsapp')" style="background:#25D366">💬 Generate & WhatsApp</button>
+  </div>
+  <p style="font-family:var(--fm);font-size:10px;color:var(--muted);text-align:center;margin-top:6px">Email = auto-sent via Brevo · WhatsApp = opens WA with message ready</p>
+
   <div class="send-status" id="sendStatus"></div>
   <div id="aiOutput" style="display:none">
     <div class="divider"></div>
     <div class="ai-box">
-      <div class="ai-label">✅ Email Sent via Brevo</div>
+      <div class="ai-label" id="aiLabel">✅ Message Ready</div>
       <div class="ai-subject" id="aiSubject"></div>
       <div class="ai-body" id="aiBody"></div>
     </div>
     <div class="action-row">
       <button class="btn btn-outline" style="margin-top:0" onclick="copyEmail()">📋 Copy</button>
-      <button class="btn btn-outline" style="margin-top:0" onclick="generateAndSend()">🔄 Resend</button>
+      <button class="btn btn-outline" style="margin-top:0" id="resendBtn" onclick="generateAndSend(lastChannel)">🔄 Resend</button>
     </div>
   </div>
 </div>
@@ -283,15 +290,20 @@ function customCityChange(v){document.querySelectorAll('#cityChips .chip').forEa
 function checkReady(){document.getElementById('mapsBtn').disabled=!(pickedNiche&&pickedCity);}
 function openMaps(){window.open('https://www.google.com/maps/search/'+encodeURIComponent(pickedNiche.q+' in '+pickedCity),'_blank');toast('Google Maps opened!');}
 
-async function generateAndSend(){
+let lastChannel='email';
+async function generateAndSend(channel){
+  channel=channel||'email';
+  lastChannel=channel;
   const gk=localStorage.getItem('s_groqKey');
   const bk=localStorage.getItem('s_brevoKey');
-  if(!gk||!bk){toast('Add API keys in ⚙️ Settings first.');switchTab('settings');return;}
+  if(!gk){toast('Add Groq API key in ⚙️ Settings first.');switchTab('settings');return;}
   const name=document.getElementById('oName').value.trim();
   const niche=document.getElementById('oNiche').value;
   const email=document.getElementById('oEmail').value.trim();
+  const phone=document.getElementById('oPhone').value.trim();
   if(!name||!niche){toast('Enter business name and niche.');return;}
-  if(!email){toast('Enter their email to auto-send.');return;}
+  if(channel==='email'&&!email){toast('Enter their email to send via email.');return;}
+  if(channel==='whatsapp'&&!phone){toast('Enter their WhatsApp number to send via WhatsApp.');return;}
   const city=document.getElementById('oCity').value.trim();
   const site=document.getElementById('oSite').value;
   const owner=document.getElementById('oOwner').value.trim();
@@ -301,14 +313,23 @@ async function generateAndSend(){
   const builderUrl=localStorage.getItem('s_builderUrl')||'https://outreachsyste.netlify.app/website-builder.html';
   const siteDesc={none:'they have no website at all',bad:'their website is slow and broken on mobile',old:'their website looks extremely outdated'}[site];
   const greeting=owner?`Hi ${owner}`:'Hi there';
-  const btn=document.getElementById('generateBtn');
+  const isWA=channel==='whatsapp';
+  const btn=isWA?document.getElementById('waBtn'):document.getElementById('generateBtn');
   btn.innerHTML='<span class="spinner"></span>Generating…';btn.disabled=true;
   document.getElementById('aiOutput').style.display='none';
   document.getElementById('sendStatus').className='send-status sending';
-  document.getElementById('sendStatus').textContent='⟳ Writing personalized email with Groq AI…';
+  document.getElementById('sendStatus').textContent='⟳ Writing personalized message with Groq AI…';
 
   try{
-    // STEP 1: Generate with Groq (free)
+    // STEP 1: Generate with Groq
+    const msgFormat=isWA?
+      `Write a short, friendly WhatsApp message (under 80 words). No subject line needed. Start with "${greeting}," and end with the builder link. Sign off as ${myName}.`
+      :`Write a cold email. Format EXACTLY:
+SUBJECT: [subject line]
+---
+[email body starting with "${greeting},"]
+Rules: Under 150 words. Include this line: "👉 See a free preview of your website here: ${builderUrl}" End with one soft question. Sign off: ${myName} | Full-Stack Developer | ${myEmail}`;
+
     const groqRes=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+gk},
@@ -316,18 +337,10 @@ async function generateAndSend(){
         model:'llama-3.3-70b-versatile',
         max_tokens:600,
         messages:[
-          {role:'system',content:`You are ${myName}, a freelance full-stack web developer. Write short, warm, human cold emails to US small business owners. Never sound like a template.`},
-          {role:'user',content:`Write a cold email to this business:
-Business: ${name} | Niche: ${niche} | City: ${city||'USA'} | Website situation: ${siteDesc}${note?' | Note: '+note:''}
-
-You help small businesses get professional websites in 10 days from $350. You offer a FREE instant website preview tool.
-
-Format EXACTLY:
-SUBJECT: [subject line]
----
-[email body starting with "${greeting},"]
-
-Rules: Under 150 words. Sound human. Mention their website situation. Include this exact line near end: "👉 See a free preview of your website here: ${builderUrl}" End with one soft question. No bullet points. Sign off: ${myName} | Full-Stack Developer | ${myEmail}`}
+          {role:'system',content:`You are ${myName}, a freelance full-stack web developer. Write short, warm, human messages to US small business owners. Never sound like a template.`},
+          {role:'user',content:`Business: ${name} | Niche: ${niche} | City: ${city||'USA'} | Website: ${siteDesc}${note?' | Note: '+note:''}
+You help businesses get professional websites in 10 days from $350. Free preview: ${builderUrl}
+${msgFormat}`}
         ]
       })
     });
@@ -335,45 +348,67 @@ Rules: Under 150 words. Sound human. Mention their website situation. Include th
     const groqData=await groqRes.json();
     if(groqData.error)throw new Error(groqData.error.message);
     const text=groqData.choices[0].message.content;
-    const parts=text.split('---');
-    const subject=(parts[0]||'').replace('SUBJECT:','').trim();
-    const body=(parts[1]||text).trim();
 
-    // STEP 2: Send via Brevo
-    document.getElementById('sendStatus').textContent='⟳ Sending via Brevo…';
-    const htmlBody=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#333;line-height:1.7">${body.replace(/\n/g,'<br/>').replace(builderUrl,`<a href="${builderUrl}" style="color:#00C896;font-weight:bold">${builderUrl}</a>`)}<hr style="border:none;border-top:1px solid #eee;margin:24px 0"/><p style="font-size:12px;color:#999">Sent by ${myName} · Full-Stack Developer · Reply "unsubscribe" to opt out</p></div>`;
+    if(isWA){
+      // WhatsApp — open WA with message pre-filled
+      const waMsg=text.trim();
+      document.getElementById('aiLabel').textContent='💬 WhatsApp Message Ready';
+      document.getElementById('aiSubject').textContent='';
+      document.getElementById('aiBody').textContent=waMsg;
+      document.getElementById('aiOutput').style.display='block';
+      document.getElementById('sendStatus').className='send-status sent';
+      document.getElementById('sendStatus').textContent='✅ Message ready — tap Open WhatsApp below';
 
-    const brevoRes=await fetch('https://api.brevo.com/v3/smtp/email',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','api-key':bk},
-      body:JSON.stringify({
-        sender:{name:myName,email:myEmail},
-        to:[{email,name:owner||name}],
-        subject,
-        htmlContent:htmlBody,
-        textContent:body
-      })
-    });
+      // Clean phone number
+      const cleanPhone=phone.replace(/[^0-9]/g,'');
+      const waUrl=`https://wa.me/${cleanPhone}?text=${encodeURIComponent(waMsg)}`;
 
-    const brevoData=await brevoRes.json();
-    if(!brevoRes.ok)throw new Error(brevoData.message||'Brevo send failed');
+      // Add open WA button
+      document.getElementById('aiOutput').querySelector('.action-row').innerHTML=`
+        <a href="${waUrl}" target="_blank" class="btn" style="background:#25D366;color:#000;margin-top:0;flex:1;padding:10px;text-decoration:none;text-align:center;border-radius:8px;font-family:var(--fd);font-weight:800;font-size:14px">💬 Open WhatsApp</a>
+        <button class="btn btn-outline" style="margin-top:0;flex:1" onclick="copyEmail()">📋 Copy</button>`;
 
-    // SUCCESS
-    document.getElementById('aiSubject').textContent='📧 '+subject;
-    document.getElementById('aiBody').textContent=body;
-    document.getElementById('aiOutput').style.display='block';
-    document.getElementById('sendStatus').className='send-status sent';
-    document.getElementById('sendStatus').textContent='✅ Email sent to '+email;
-    currentLead={id:uid(),name,niche,city,site,email,owner,note,status:'contacted',subject,body,date:today()};
-    if(!leads.find(l=>l.email===email)){leads.unshift(currentLead);saveLeads();updateDailyGoal();}
-    toast('✅ Email sent & saved to pipeline!');
+      currentLead={id:uid(),name,niche,city,site,email:phone,owner,note,status:'contacted',subject:'WhatsApp',body:waMsg,date:today()};
+      if(!leads.find(l=>l.email===phone)){leads.unshift(currentLead);saveLeads();updateDailyGoal();}
+      toast('💬 Open WhatsApp to send!');
+
+    } else {
+      // Email — send via Brevo
+      const parts=text.split('---');
+      const subject=(parts[0]||'').replace('SUBJECT:','').trim();
+      const body=(parts[1]||text).trim();
+
+      document.getElementById('sendStatus').textContent='⟳ Sending via Brevo…';
+      const htmlBody=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#333;line-height:1.7">${body.replace(/\n/g,'<br/>').replace(builderUrl,`<a href="${builderUrl}" style="color:#00C896;font-weight:bold">${builderUrl}</a>`)}<hr style="border:none;border-top:1px solid #eee;margin:24px 0"/><p style="font-size:12px;color:#999">Sent by ${myName} · Reply "unsubscribe" to opt out</p></div>`;
+
+      const brevoRes=await fetch('https://api.brevo.com/v3/smtp/email',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','api-key':bk},
+        body:JSON.stringify({sender:{name:myName,email:myEmail},to:[{email,name:owner||name}],subject,htmlContent:htmlBody,textContent:body})
+      });
+      const brevoData=await brevoRes.json();
+      if(!brevoRes.ok)throw new Error(brevoData.message||'Brevo send failed');
+
+      document.getElementById('aiLabel').textContent='✅ Email Sent via Brevo';
+      document.getElementById('aiSubject').textContent='📧 '+subject;
+      document.getElementById('aiBody').textContent=body;
+      document.getElementById('aiOutput').style.display='block';
+      document.getElementById('aiOutput').querySelector('.action-row').innerHTML=`
+        <button class="btn btn-outline" style="margin-top:0;flex:1" onclick="copyEmail()">📋 Copy</button>
+        <button class="btn btn-outline" style="margin-top:0;flex:1" onclick="generateAndSend('email')">🔄 Resend</button>`;
+      document.getElementById('sendStatus').className='send-status sent';
+      document.getElementById('sendStatus').textContent='✅ Email sent to '+email;
+      currentLead={id:uid(),name,niche,city,site,email,owner,note,status:'contacted',subject,body,date:today()};
+      if(!leads.find(l=>l.email===email)){leads.unshift(currentLead);saveLeads();updateDailyGoal();}
+      toast('✅ Email sent & saved to pipeline!');
+    }
 
   }catch(e){
     document.getElementById('sendStatus').className='send-status failed';
     document.getElementById('sendStatus').textContent='❌ '+e.message;
     toast(e.message,'error');
   }
-  btn.innerHTML='✨ Generate & Send Email';btn.disabled=false;
+  btn.innerHTML=isWA?'💬 Generate & WhatsApp':'✉️ Generate & Email';btn.disabled=false;
 }
 
 function copyEmail(){
