@@ -1,0 +1,12 @@
+{
+      "name": "outreach-system",
+        "version": "1.0.0",
+          "description": "Outreach, preview, and payment system",
+            "dependencies": {
+                    "@netlify/blobs": "^7.0.0",
+                        "stripe": "^16.0.0",
+                            "jszip": "^3.10.1"
+            }
+}
+            }
+}
