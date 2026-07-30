@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Flow</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+    button { display: block; width: 100%; padding: 14px; margin: 10px 0; font-size: 16px; }
+    pre { background: #eee; padding: 10px; white-space: pre-wrap; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <h2>Test the payment flow</h2>
+
+  <button onclick="testSaveLead()">1. Create a test lead</button>
+  <button onclick="testCreatePayment()">2. Start payment for that lead</button>
+
+  <pre id="output">Results will show here...</pre>
+
+  <script>
+    let currentLeadId = null;
+    const output = document.getElementById('output');
+
+    async function testSaveLead() {
+      output.textContent = 'Saving test lead...';
+      try {
+        const res = await fetch('/.netlify/functions/save-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            businessName: 'Test Business',
+            contactEmail: 'test@example.com',
+            country: 'KE',
+            tag: 'no_website',
+            previewHtml: '<h1>Test preview</h1>'
+          })
+        });
+        const data = await res.json();
+        currentLeadId = data.leadId;
+        output.textContent = 'Lead created!\n\nLead ID: ' + currentLeadId + '\n\n' + JSON.stringify(data, null, 2);
+      } catch (err) {
+        output.textContent = 'Error: ' + err.message;
+      }
+    }
+
+    async function testCreatePayment() {
+      if (!currentLeadId) {
+        output.textContent = 'Create a lead first (button 1)';
+        return;
+      }
+      output.textContent = 'Starting payment...';
+      try {
+        const res = await fetch('/.netlify/functions/create-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId: currentLeadId })
+        });
+        const data = await res.json();
+        output.textContent = JSON.stringify(data, null, 2);
+        if (data.url) {
+          output.textContent += '\n\nTap the link below to open checkout:';
+          const link = document.createElement('a');
+          link.href = data.url;
+          link.textContent = 'Open Paystack Checkout';
+          link.style.display = 'block';
+          link.style.marginTop = '10px';
+          output.parentNode.appendChild(link);
+        }
+      } catch (err) {
+        output.textContent = 'Error: ' + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
